@@ -1,0 +1,14 @@
+$mainColour: #7777bb;
+
+body {
+    background-color: $mainColour;
+}
+
+.no-show {
+    display: none;
+}
+
+.selected {
+    font-weight: bold;
+    color: red;
+}
