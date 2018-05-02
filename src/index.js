@@ -15,6 +15,8 @@ document.querySelector('#playerSetup').addEventListener('submit', (e) => {
 
     if (!playerName) {
         alert('you must type a username');
+        e.preventDefault();
+        document.querySelector('#playerSetup').reset();
     } else {
         const difficulty = [...inputs].filter((input) => input.type === 'radio' && input.checked)[0].id;
             

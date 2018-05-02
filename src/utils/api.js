@@ -1,5 +1,6 @@
 import shuffle from './shuffle';
 import loading from './loading';
+import { getPlayerInfo } from './player';
 
 // excluded countries with missing region and subregion data
 const EXCLUDE_ONE = 'Antarctica';
@@ -11,45 +12,35 @@ const dataBank = {
     formattedQuestions: null
 }
 
-const incorrectAnswers = {
-    flags: [],
-    names: [],
-    capitals: [],
-    populations: []
-}
-
-const populateIncorrectAnswers = () => {
+const formatQuestion = (difficulty) => {
     const { countries } = dataBank;
-    const { flags, capitals, populations, regions, subregions, names } = incorrectAnswers;
-    
-    const incorrectArr = countries.slice(15, 30);
-    // add 9 incorrect answers to each property
-    incorrectArr.map(({ flag, capital, name, region, subregion, population }) => {
-        flags.length !== 9 ? flags.push(flag) : null;
-        capitals.length !== 9 ? capitals.push(capital) : null;
-        names.length !== 9 ? names.push(name) : null;
-        populations.length !== 9 ? populations.push(population) : null;
-    });
-}
-
-const formatQuestion = () => {
-    const { countries } = dataBank;
-    const questionDrafts = [
+    let questionTitles;
+    const drafts = [
         'Which is the flag of _ ?', 
         '_ belongs to which region of the world?',
         '_ is the capital of which country?', 
         '_ is found in which world subregion?',
         'The population of _ is aproximately how many?'
     ];
-    let questionTitles = [
-        ...duplicator(questionDrafts[0]), 
-        ...duplicator(questionDrafts[1]),
-        ...duplicator(questionDrafts[2]),
-        ...duplicator(questionDrafts[3]),
-        ...duplicator(questionDrafts[4]),
-    ];
+    // remove population and subregion questions for easy difficulty
+    if (difficulty === 'easy') {
+        questionTitles = [
+            ...duplicator(drafts[0], 5), 
+            ...duplicator(drafts[1], 5),
+            ...duplicator(drafts[2], 5),
+        ];
+    } else {
+        questionTitles = [
+            ...duplicator(drafts[0], 4), 
+            ...duplicator(drafts[1], 1),
+            ...duplicator(drafts[2], 4),
+            ...duplicator(drafts[3], 2),
+            ...duplicator(drafts[4], 4),
+        ];
+    }
+
     // shuffle the question titles
-    questionTitles = shuffle(questionTitles, false);
+    questionTitles = shuffle(questionTitles);
     // countries for correct answers
     const questionsArr = countries.slice(0, 15);
     
@@ -60,11 +51,10 @@ const formatQuestion = () => {
         
         switch(title) {
             case 'Which is the flag of _ ?':
-                
                 questionObj = {
                     title,
                     replaceUnderscore: name, 
-                    incorrectAnswers: getIncorrect('flags'),
+                    incorrectAnswers: getIncorrect('flag'),
                     correctAnswer: flag,
                     points: 2
                 }
@@ -73,7 +63,6 @@ const formatQuestion = () => {
                 return questionObj;
                 break;
             case '_ belongs to which region of the world?':
-                
                 questionObj = {
                     title,
                     replaceUnderscore: name, 
@@ -86,11 +75,10 @@ const formatQuestion = () => {
                 return questionObj;
                 break;
             case '_ is the capital of which country?':
-                
                 questionObj = {
                     title,
                     replaceUnderscore: capital, 
-                    incorrectAnswers: getIncorrect('names'),
+                    incorrectAnswers: getIncorrect('name'),
                     correctAnswer: name,
                     points: 2
                 }
@@ -99,7 +87,6 @@ const formatQuestion = () => {
                 return questionObj;
                 break;
             case '_ is found in which world subregion?':
-                
                 questionObj = {
                     title,
                     replaceUnderscore: name, 
@@ -112,11 +99,10 @@ const formatQuestion = () => {
                 return questionObj;
                 break;
             case 'The population of _ is aproximately how many?':
-                
                 questionObj = {
                     title,
                     replaceUnderscore: name, 
-                    incorrectAnswers: getIncorrect('populations'),
+                    incorrectAnswers: getIncorrect('population'),
                     correctAnswer: population,
                     points: 3
                 }
@@ -128,11 +114,11 @@ const formatQuestion = () => {
     }); 
 }
 
-const getIncorrect = (property) => {
-    const answers = incorrectAnswers[property].slice(0, 3);
-    incorrectAnswers[property].splice(0, 3);
+const getIncorrect = (type) => {
+    const { countries } = dataBank;
     
-    return answers;
+    return shuffle(countries.slice(15)).map((country) => country[type])
+            .splice(0, 3);
 }
 
 const getIncorrectRegion = (correct) => {
@@ -153,7 +139,7 @@ const getIncorrectSubregion = (correct) => {
         'Western Africa', 'Middle Africa', 'Southern Africa', 'Eastern Africa', 'Western Asia', 
         'Central Asia', 'Southern Asia', 'Eastern Asia', 'Southeastern Asia', 'Micronesia', 
         'Melanesia', 'Polynesia', 'Australia and New Zealand'
-    ]
+    ];
     
     // make sure we have no duplicate subregion answers
     const correctIndex = subregions.indexOf(correct);
@@ -163,35 +149,58 @@ const getIncorrectSubregion = (correct) => {
     return subregions;
 }
 
-const duplicator = (question) => {
+const duplicator = (question, number = 3) => {
     const arr = [];
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < number; i++) {
         arr.push(question)
     }
     return arr;
 } 
 
-const formatPopulation = (arr) => {
-    arr.forEach(({ population }, index, arr) => arr[index].population = population.toLocaleString('en'));
-    return arr;
+const formatPopulation = (arr) => arr.forEach(({ population }, index, arr) => arr[index].population = population.toLocaleString('en'));
+
+const easyFilter = (countries) => {
+    // remove small islands and also remove countries within oceania region except for Australia and New Zealand
+    const ausNz = countries.filter(({ name }) => name === 'Australia' || name === 'New Zealand');
+    
+    return countries.filter(({ name, region }) => name !== EXCLUDE_ONE && !name.includes('Island') && region !== 'Oceania')
+        .concat(ausNz);
 };
 
 export const fetchQuestions = () => {
+    const { difficulty } = getPlayerInfo();
+    
     loading(true);
     
-    return fetch('https://restcountries.eu/rest/v2/all?fields=name;capital;flag;population;region;subregion')
-        .then((response) => response.json())
-        .then((data) => {
-            // remove countries with missing data 
-            const filteredCountries = data.filter(({ name }) => name !== EXCLUDE_ONE || name !== EXCLUDE_TWO || name !== EXCLUDE_THREE);
-            // shuffle remaining countries and format population number
-            dataBank.countries = formatPopulation(shuffle(filteredCountries, true));
-            // populate incorrect answers
-            populateIncorrectAnswers();
-            // create formatted questions
-            dataBank.formattedQuestions = formatQuestion();
-            loading(false);
-            return dataBank.formattedQuestions;
-        })
-        .catch((error) => console.log(error));
+    // determine diffculty mode
+    if (difficulty === 'easy') {
+        return fetch('https://restcountries.eu/rest/v2/all?fields=name;capital;flag;region;')
+            .then((response) => response.json())
+            .then((data) => {
+                // format for easier countries and shuffle
+                dataBank.countries = shuffle(easyFilter(data));
+                // create formatted questions
+                dataBank.formattedQuestions = formatQuestion('easy');
+                loading(false);
+                return dataBank.formattedQuestions;
+            })
+            .catch((error) => console.log(error)); 
+    } else {
+        return fetch('https://restcountries.eu/rest/v2/all?fields=name;capital;flag;population;region;subregion')
+            .then((response) => response.json())
+            .then((data) => {
+                // remove countries with missing data 
+                const filteredCountries = data.filter(({ name }) => name !== EXCLUDE_ONE && name !== EXCLUDE_TWO && name !== EXCLUDE_THREE);
+                // format population number
+                formatPopulation(filteredCountries);
+                // shuffle remaining countries and format population number
+                dataBank.countries = shuffle(filteredCountries);
+                // create formatted questions
+                dataBank.formattedQuestions = formatQuestion('hard');
+                loading(false);
+                return dataBank.formattedQuestions;
+            })
+            .catch((error) => console.log(error));    
+    }
+    
 }
