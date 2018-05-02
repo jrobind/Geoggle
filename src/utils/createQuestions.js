@@ -18,7 +18,7 @@ export default () => {
             console.log(data)
             // create the ui for the question
             questionCreator(data[count])
-        })
+        });
 }
 
 const questionCreator = ({ 
@@ -43,12 +43,15 @@ const questionCreator = ({
     
     // append question options
     shuffle(incorrectAnswers.concat(correctAnswer)).forEach((el) => {
+        let option;
         // check whether the question relates to flags or not
-        const option = !title.includes('flag') ? document.createElement('li') : document.createElement('img');
-        // set src attribute for img if dealing with flags, otherwise just set text
-        !title.includes('flag') ? option.innerHTML = el : option.setAttribute('src', el);
-        // setup click handler for each option
-        option.addEventListener('click', checkAnswer);
+        if (!title.includes('flag')) {
+            option = document.createElement('li');
+            option.innerHTML = el;
+            option.addEventListener('click', checkAnswer);
+        } else {
+            option = handleFlagImg(el); 
+        }
         questionUl.appendChild(option);
     });
     
@@ -56,6 +59,17 @@ const questionCreator = ({
     questionDiv.appendChild(questionUl);
     questionDiv.appendChild(nextQuestionBtn());
     quiz.appendChild(questionDiv);
+}
+
+const handleFlagImg = (el) => {
+    const liEl = document.createElement('li');
+    const imgEl = document.createElement('img');
+    imgEl.setAttribute('src', el);
+    liEl.appendChild(imgEl);
+    // add handler to li containing flag img
+    liEl.addEventListener('click', checkAnswer);
+    
+    return liEl;
 }
 
 const formatTitle = (title, replaceUnderscore) => title.replace('_', replaceUnderscore);
@@ -87,12 +101,15 @@ const nextQuestionBtn = (questionNumber) => {
 // handlers
 const checkAnswer = ({ target }) => {
     const { correctAnswer, points } = questions[count];
-
-    // add selected style
-    target.classList.add('selected');
+    const isFlag = target.nodeName === 'IMG' ? true : false;
     
-    if (target.innerText === correctAnswer) {
-        updateScore(points);
+    // add selected style
+    if (isFlag) {
+        target.parentElement.classList.add('selected');
+        target.src === correctAnswer ? updateScore(points) : null;
+    } else {
+        target.classList.add('selected');  
+        target.innerText === correctAnswer ? updateScore(points) : null;
     }
     
     removeListeners();
