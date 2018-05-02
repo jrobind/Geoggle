@@ -1,13 +1,12 @@
 import { fetchQuestions } from './api';
 import shuffle from './shuffle';
-import setTimer from './timer';
+import timer from './timer';
 import { getPlayerInfo } from './player';
 import { updateScore, handleScoreUi } from './score';
 const quiz = document.querySelector('#quiz');
 
 let count = 0;
 let questions;
-const { difficulty } = getPlayerInfo();
 
 export default () => {
     fetchQuestions()
@@ -20,8 +19,6 @@ export default () => {
             console.log(data)
             // create the ui for the question
             questionCreator(data[count])
-            // if difficulty is hard set the timer
-            difficulty === 'hard' ? setTimer() : null;
         });
 }
 
@@ -31,6 +28,7 @@ const questionCreator = ({
     incorrectAnswers,
     replaceUnderscore 
 }) => {
+    const { difficulty } = getPlayerInfo();
     // replace the title underscore with correct value
     title = formatTitle(title, replaceUnderscore);
     
@@ -41,6 +39,7 @@ const questionCreator = ({
     // determine whether we need a timer for hard difficulty
     if (difficulty === 'hard') {
         const timerDiv = document.createElement('div');
+        timerDiv.id = 'timerContainer';
         const pEl = document.createElement('p');
         pEl.id = 'timer';
         timerDiv.appendChild(pEl);
@@ -71,6 +70,8 @@ const questionCreator = ({
     questionDiv.appendChild(questionUl);
     questionDiv.appendChild(nextQuestionBtn());
     quiz.appendChild(questionDiv);
+    // if difficulty is hard set the timer
+    difficulty === 'hard' ? timer.setTimer() : null;
 }
 
 const handleFlagImg = (el) => {
@@ -131,28 +132,41 @@ const removeListeners = () => {
     [...document.querySelectorAll('li')].forEach((el) => el.removeEventListener('click', checkAnswer));
 }
 
-const incrementCount = (outOfTime) => {
-    const checkedAnswers = [...document.querySelectorAll('#question li')].filter((el) => el.classList.contains('selected')).length;
-    // check if user has selected an answer. If not, prevent from moving on
-    if (!checkedAnswers && !outOfTime) {
-        alert('Please select an answer');
+const finishSetup = () => {
+    removeQuestion();
+    // create 'see score' btn
+    const finishBtn = document.createElement('button');
+    finishBtn.id = 'finish';
+    finishBtn.innerText = 'see score'
+    // add route handler
+    finishBtn.addEventListener('click', handleScoreUi);
+    quiz.appendChild(finishBtn);   
+}
+
+const increment = () => {
+    const { difficulty } = getPlayerInfo();
+    
+    if (count !== 14) {
+        count++;
+        // reset countdown interval before removal
+        difficulty === 'hard' ? timer.resetTimer() : null;
+        removeQuestion();
+        questionCreator(questions[count]);
     } else {
-        if (count !== 14) {
-            count++;
-            removeQuestion();
-            questionCreator(questions[count]);
-            difficulty === 'hard' ? setTimer() : null;
-        } else { 
-            removeQuestion();
-            // create 'see score' btn
-            const finishBtn = document.createElement('button');
-            finishBtn.id = 'finish';
-            finishBtn.innerText = 'see score'
-            // add route handler
-            finishBtn.addEventListener('click', handleScoreUi);
-            quiz.appendChild(finishBtn);   
-        }    
+        difficulty === 'hard' ? timer.resetTimer() : null;
+        finishSetup();
+    }    
+}
+
+const incrementCount = () => {
+    const checkedAnswers = [...document.querySelectorAll('#question li')].filter((el) => el.classList.contains('selected')).length;
+    
+    // if user tries to progress to next question but has not selected an answer, then alert them
+    if (!checkedAnswers) {
+        alert('Please select an answer');
+    } else  {
+        increment();
     }
 };
 
-export { incrementCount };
+export const forceNextQuestion = () => increment();

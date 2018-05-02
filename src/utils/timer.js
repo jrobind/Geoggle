@@ -1,20 +1,26 @@
-import { incrementCount } from './createQuestions';
+import { forceNextQuestion } from './createQuestions';
 
-export default () => {
-    const time = document.querySelector('#timer');
-    // set initial starting time
-    time.innerHTML = '10';
-    
-    const id = setInterval(() => {
-        if (time.innerHTML === '0') {
-            clearInterval(id);
-            time.innerHTML = 'You are out of time!';
-            // move on to next question after short delay
-            setTimeout(() => {
-                incrementCount(true);
-            }, 1500);
-        } else {
-            time.innerHTML = time.innerHTML -1;   
-        }
-    }, 1000);  
+let intervalId;
+
+export default {
+    setTimer() {
+        const time = document.querySelector('#timer');
+        
+        let counter = 10;
+        // set initial starting time
+        time.innerHTML = `00:${counter}`;
+
+        intervalId = setInterval(() => {  
+            if (counter === 0) {
+                clearInterval(intervalId);
+                // move to next question
+                forceNextQuestion();
+            }
+            counter--;
+            time.innerHTML = `00:0${counter}`;
+        }, 1000);    
+    },
+    resetTimer() {
+        clearInterval(intervalId);
+    }
 }
