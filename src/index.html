@@ -14,9 +14,20 @@
         
         <div id="setup">
             <p>USER SETUP</p>
-            <label>Player nickname</label>
-            <input id="playerName" type="text">
-            <button id='begin'>Begin quiz!</button>
+            <form id="playerSetup">
+                <label>Player nickname</label>
+                <input id="playerName" type="text">
+                <p>Select difficulty</p>
+                <label>
+                    Easy
+                    <input id="easy" name="difficulty" type="radio" checked="checked">
+                </label>
+                <label>
+                    Hard
+                    <input id="hard" name="difficulty" type="radio">
+                </label>
+                <input type="submit">
+            </form>
         </div>
         
         <div id="quiz">
