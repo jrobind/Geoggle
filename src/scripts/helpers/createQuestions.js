@@ -1,8 +1,10 @@
 import { fetchQuestions } from '../api';
 import utils from '../utils';
 import timer from './timer';
+import loading from './loading';
 import { updateScore, handleScoreUi } from './score';
 const quiz = document.querySelector('#quiz');
+const imagesLoaded = require('imagesloaded');
 
 const { difficulty } = utils.getPlayerInfo();
 const { shuffle, elementCreator, formatTitle, elementRemover } = utils;
@@ -34,6 +36,7 @@ const questionCreator = ({
     title = formatTitle(title, replaceUnderscore);
     
     // begin building question ui
+    const questionContainer = elementCreator('div', {id: 'questionContainer'});
     const questionDiv = elementCreator('div', {id: 'question'});
     
     // determine whether we need a timer for hard difficulty
@@ -43,7 +46,7 @@ const questionCreator = ({
         timerDiv.appendChild(pEl);
         questionDiv.appendChild(timerDiv);
     }
-        
+    
     // create question title
     const questionTitle = elementCreator('h2', {innerHTML: title});
     
@@ -65,9 +68,23 @@ const questionCreator = ({
     questionDiv.appendChild(questionTitle);
     questionDiv.appendChild(questionUl);
     questionDiv.appendChild(nextQuestionBtn());
-    quiz.appendChild(questionDiv);
+    // initially set quiz div to display: none, in case we need to wait for flag img loading
+    questionDiv.classList.add('no-show');
+    questionContainer.appendChild(questionDiv);
+    quiz.appendChild(questionContainer);
     // if difficulty is hard set the timer
     difficulty === 'hard' ? timer.setTimer() : null;
+    
+    // if question is for flags then load only once imgs have loaded
+    if (title.includes('flag')) {
+        loading(true);
+        imagesLoaded(document.querySelector('#question'), () => {
+            loading(false);
+            questionDiv.classList.remove('no-show');
+        });
+    } else {
+        questionDiv.classList.remove('no-show');
+    }
 }
 
 const handleFlagImg = (el) => {
@@ -83,7 +100,7 @@ const handleFlagImg = (el) => {
 const nextQuestionBtn = (questionNumber) => {
     const nextBtn = elementCreator('button', {id: 'next', innerHTML: 'Next Question'});
     // setup increment handler for next question
-    nextBtn.addEventListener('click', incrementCount);
+    nextBtn.addEventListener('click', incrementHandler);
     return nextBtn;
 }
 
@@ -133,7 +150,7 @@ const checkAnswer = ({ target }) => {
     removeListeners();
 }
 
-const incrementCount = () => {
+const incrementHandler = () => {
     const checkedAnswers = [...document.querySelectorAll('#question li')].filter((el) => el.classList.contains('selected')).length;
     
     // if user tries to progress to next question but has not selected an answer, then alert them
