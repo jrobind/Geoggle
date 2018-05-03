@@ -1,7 +1,90 @@
-$mainColour: #7777bb;
+// variables
+
+$maxHeight: 100%;
+
+// mixins
+
+// flexbox mixins
+
+@mixin flexbox() {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+@mixin flex-direction($direction) {
+    -webkit-flex-direction: $direction;
+       -moz-flex-direction: $direction;
+        -ms-flex-direction: $direction;
+            flex-direction: $direction;
+}
+
+@mixin align-items($align) {
+    -webkit-align-items: $align;
+       -moz-align-items: $align;
+        -ms-align-items: $align;
+            align-items: $align;
+}
+
+@mixin justify-content($justify) {
+    -webkit-justify-content: $justify;
+       -moz-justify-content: $justify;
+        -ms-justify-content: $justify;
+            justify-content: $justify;
+              -ms-flex-pack: $justify;
+}
+
+// default button mixins
+@mixin default-button() {
+    padding: 15px;
+    width: 70%;
+    margin: auto;
+    background-color: #194719;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+// styles
+
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+body, html, .wrapper, #home {
+    height: $maxHeight;
+}
 
 body {
-    background-color: $mainColour;
+    background: #76b852; 
+    background: -webkit-linear-gradient(to left, #8DC26F, #76b852);  
+    background: linear-gradient(to left, #8DC26F, #76b852); 
+}
+
+// home
+
+#home, .title {
+    @include flexbox();
+    @include flex-direction(column);
+    @include align-items(center);
+    @include justify-content(center);
+}
+
+#home {
+    h1 {
+        font-size: 4.5em;
+        color: white;
+    }
+    button {
+        @include default-button();
+    }
 }
 
 .no-show {
