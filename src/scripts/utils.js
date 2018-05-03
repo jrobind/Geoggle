@@ -46,5 +46,10 @@ export default {
     },
     formatTitle(title, replaceUnderscore) {
         return title.replace('_', replaceUnderscore);
+    },
+    classHandler(element, { className, allElements }) {
+        // ensure only one element has class at any given time
+        allElements.forEach((el) => el.classList.remove(className));
+        element.classList.add(className);
     }
 }

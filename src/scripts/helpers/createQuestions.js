@@ -7,7 +7,7 @@ const quiz = document.querySelector('#quiz');
 const imagesLoaded = require('imagesloaded');
 
 const { difficulty } = utils.getPlayerInfo();
-const { shuffle, elementCreator, formatTitle, elementRemover } = utils;
+const { shuffle, elementCreator, formatTitle, elementRemover, classHandler } = utils;
 
 let count = 0;
 let questions;
@@ -58,7 +58,7 @@ const questionCreator = ({
         // check whether the question relates to flags or not
         if (!title.includes('flag')) {
             option = elementCreator('li', {innerHTML: el})
-            option.addEventListener('click', checkAnswer);
+            option.addEventListener('click', addSelect);
         } else {
             option = handleFlagImg(el); 
         }
@@ -92,7 +92,7 @@ const handleFlagImg = (el) => {
     const imgEl = elementCreator('img', {src: el});
     liEl.appendChild(imgEl);
     // add handler to li containing flag img
-    liEl.addEventListener('click', checkAnswer);
+    liEl.addEventListener('click', addSelect);
     
     return liEl;
 }
@@ -105,7 +105,7 @@ const nextQuestionBtn = (questionNumber) => {
 }
 
 const removeListeners = () => {
-    [...document.querySelectorAll('li')].forEach((el) => el.removeEventListener('click', checkAnswer));
+    [...document.querySelectorAll('li')].forEach((el) => el.removeEventListener('click', addSelect));
 }
 
 const finishSetup = () => {
@@ -134,29 +134,32 @@ const increment = () => {
 
 // handlers
 
-const checkAnswer = ({ target }) => {
-    const { correctAnswer, points } = questions[count];
+const addSelect = ({ target }) => {
     const isFlag = target.nodeName === 'IMG' ? true : false;
     
     // add selected style
-    if (isFlag) {
-        target.parentElement.classList.add('selected');
-        target.src === correctAnswer ? updateScore(points) : null;
-    } else {
-        target.classList.add('selected');  
-        target.innerHTML === correctAnswer ? updateScore(points) : null;
-    }
-    
-    removeListeners();
+    classHandler(isFlag ? target.parentElement : target, {
+        className: 'selected', 
+        allElements: [...document.querySelectorAll('#question li')]
+    });
 }
 
 const incrementHandler = () => {
-    const checkedAnswers = [...document.querySelectorAll('#question li')].filter((el) => el.classList.contains('selected')).length;
+    const { correctAnswer, points, title } = questions[count];
+    const checkedAnswers = [...document.querySelectorAll('#question li')].filter((el) => el.classList.contains('selected'));
     
     // if user tries to progress to next question but has not selected an answer, then alert them
-    if (!checkedAnswers) {
+    if (!checkedAnswers.length) {
         alert('Please select an answer');
     } else  {
+        // process score 
+        if (title.includes('flag')) {
+            checkedAnswers[0].firstChild.src === correctAnswer ? updateScore(points) : null;   
+        } else {
+            checkedAnswers[0].innerHTML === correctAnswer ? updateScore(points) : null;
+        }
+        
+        removeListeners();
         increment();
     }
 };
