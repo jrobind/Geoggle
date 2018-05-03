@@ -6,7 +6,6 @@ import { updateScore, handleScoreUi } from './score';
 const quiz = document.querySelector('#quiz');
 const imagesLoaded = require('imagesloaded');
 
-const { difficulty } = utils.getPlayerInfo();
 const { shuffle, elementCreator, formatTitle, elementRemover, classHandler } = utils;
 
 let count = 0;
@@ -20,7 +19,7 @@ export default () => {
             elementRemover('#finish');
             // set the current question data
             questions = data;
-            console.log(data)
+            console.log(data);
             // create the ui for the question
             questionCreator(data[count])
         });
@@ -32,6 +31,8 @@ const questionCreator = ({
     incorrectAnswers,
     replaceUnderscore 
 }) => {
+    const { difficulty } = utils.getPlayerInfo();
+    
     // replace the title underscore with correct value
     title = formatTitle(title, replaceUnderscore);
     
