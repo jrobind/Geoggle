@@ -9,5 +9,3 @@ export const playerSetup = (name, difficulty) => {
         }));
     } 
 }
-
-export const getPlayerInfo = () => JSON.parse(localStorage.getItem('current player'));

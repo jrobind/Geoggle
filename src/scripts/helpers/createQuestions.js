@@ -4,6 +4,9 @@ import timer from './timer';
 import { updateScore, handleScoreUi } from './score';
 const quiz = document.querySelector('#quiz');
 
+const { difficulty } = utils.getPlayerInfo();
+const { shuffle, elementCreator, formatTitle, elementRemover } = utils;
+
 let count = 0;
 let questions;
 
@@ -12,7 +15,7 @@ export default () => {
         .then((data) => {
             // reset the count and remove score button for restarted games
             count = 0;
-            removeScoreBtn();
+            elementRemover('#finish');
             // set the current question data
             questions = data;
             console.log(data)
@@ -27,37 +30,31 @@ const questionCreator = ({
     incorrectAnswers,
     replaceUnderscore 
 }) => {
-    const { difficulty } = utils.getPlayerInfo();
     // replace the title underscore with correct value
     title = formatTitle(title, replaceUnderscore);
     
-    // build question
-    const questionDiv = document.createElement('div');
-    questionDiv.id = 'question';
+    // begin building question ui
+    const questionDiv = elementCreator('div', {id: 'question'});
     
     // determine whether we need a timer for hard difficulty
     if (difficulty === 'hard') {
-        const timerDiv = document.createElement('div');
-        timerDiv.id = 'timerContainer';
-        const pEl = document.createElement('p');
-        pEl.id = 'timer';
+        const timerDiv = elementCreator('div', {id: 'timerContainer'});
+        const pEl = elementCreator('p', {id: 'timer'});
         timerDiv.appendChild(pEl);
         questionDiv.appendChild(timerDiv);
     }
         
     // create question title
-    const questionTitle = document.createElement('h2');
-    questionTitle.innerHTML = title;
+    const questionTitle = elementCreator('h2', {innerHTML: title});
     
-    const questionUl = document.createElement('ul');
+    const questionUl = elementCreator('ul');
     
     // append question options
-    utils.shuffle(incorrectAnswers.concat(correctAnswer)).forEach((el) => {
+    shuffle(incorrectAnswers.concat(correctAnswer)).forEach((el) => {
         let option;
         // check whether the question relates to flags or not
         if (!title.includes('flag')) {
-            option = document.createElement('li');
-            option.innerHTML = el;
+            option = elementCreator('li', {innerHTML: el})
             option.addEventListener('click', checkAnswer);
         } else {
             option = handleFlagImg(el); 
@@ -74,9 +71,8 @@ const questionCreator = ({
 }
 
 const handleFlagImg = (el) => {
-    const liEl = document.createElement('li');
-    const imgEl = document.createElement('img');
-    imgEl.setAttribute('src', el);
+    const liEl = elementCreator('li');
+    const imgEl = elementCreator('img', {src: el});
     liEl.appendChild(imgEl);
     // add handler to li containing flag img
     liEl.addEventListener('click', checkAnswer);
@@ -84,47 +80,11 @@ const handleFlagImg = (el) => {
     return liEl;
 }
 
-const formatTitle = (title, replaceUnderscore) => title.replace('_', replaceUnderscore);
-
-const removeQuestion = () => {
-    const question = document.querySelector('#question');
-    question.parentNode.removeChild(question);
-}
-
-const removeScoreBtn = () => {
-    const scoreBtn = document.querySelector('#finish');
-    
-    if (scoreBtn)  {
-        scoreBtn.parentNode.removeChild(scoreBtn);   
-    } else {
-        return;
-    }
-}
-
 const nextQuestionBtn = (questionNumber) => {
-    const nextBtn = document.createElement('button');
-    nextBtn.id = 'next';
-    nextBtn.innerText = 'Next Question';
+    const nextBtn = elementCreator('button', {id: 'next', innerHTML: 'Next Question'});
     // setup increment handler for next question
     nextBtn.addEventListener('click', incrementCount);
     return nextBtn;
-}
-
-// handlers
-const checkAnswer = ({ target }) => {
-    const { correctAnswer, points } = questions[count];
-    const isFlag = target.nodeName === 'IMG' ? true : false;
-    
-    // add selected style
-    if (isFlag) {
-        target.parentElement.classList.add('selected');
-        target.src === correctAnswer ? updateScore(points) : null;
-    } else {
-        target.classList.add('selected');  
-        target.innerText === correctAnswer ? updateScore(points) : null;
-    }
-    
-    removeListeners();
 }
 
 const removeListeners = () => {
@@ -132,12 +92,10 @@ const removeListeners = () => {
 }
 
 const finishSetup = () => {
-    removeQuestion();
+    elementRemover('#question');
     // create 'see score' btn
-    const finishBtn = document.createElement('button');
-    finishBtn.id = 'finish';
-    finishBtn.innerText = 'see score'
-    // add route handler
+    const finishBtn = elementCreator('button', {id: 'finish', innerHTML: 'see score'})
+    // add handler
     finishBtn.addEventListener('click', handleScoreUi);
     quiz.appendChild(finishBtn);   
 }
@@ -149,12 +107,30 @@ const increment = () => {
         count++;
         // reset countdown interval before removal
         difficulty === 'hard' ? timer.resetTimer() : null;
-        removeQuestion();
+        elementRemover('#question');
         questionCreator(questions[count]);
     } else {
         difficulty === 'hard' ? timer.resetTimer() : null;
         finishSetup();
     }    
+}
+
+// handlers
+
+const checkAnswer = ({ target }) => {
+    const { correctAnswer, points } = questions[count];
+    const isFlag = target.nodeName === 'IMG' ? true : false;
+    
+    // add selected style
+    if (isFlag) {
+        target.parentElement.classList.add('selected');
+        target.src === correctAnswer ? updateScore(points) : null;
+    } else {
+        target.classList.add('selected');  
+        target.innerHTML === correctAnswer ? updateScore(points) : null;
+    }
+    
+    removeListeners();
 }
 
 const incrementCount = () => {
