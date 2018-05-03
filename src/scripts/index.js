@@ -1,7 +1,7 @@
-import routeHandler from './utils/routes';
-import { playerSetup } from './utils/player';
-import createQuestions from './utils/createQuestions';
-import './style.scss';
+import routeHandler from './routes';
+import { playerSetup } from './helpers/player';
+import createQuestions from './helpers/createQuestions';
+import '../styles/style.scss';
 
 // initialise the app on first load
 routeHandler.init();

@@ -1,7 +1,6 @@
-import { fetchQuestions } from './api';
-import shuffle from './shuffle';
+import { fetchQuestions } from '../api';
+import utils from '../utils';
 import timer from './timer';
-import { getPlayerInfo } from './player';
 import { updateScore, handleScoreUi } from './score';
 const quiz = document.querySelector('#quiz');
 
@@ -28,7 +27,7 @@ const questionCreator = ({
     incorrectAnswers,
     replaceUnderscore 
 }) => {
-    const { difficulty } = getPlayerInfo();
+    const { difficulty } = utils.getPlayerInfo();
     // replace the title underscore with correct value
     title = formatTitle(title, replaceUnderscore);
     
@@ -53,7 +52,7 @@ const questionCreator = ({
     const questionUl = document.createElement('ul');
     
     // append question options
-    shuffle(incorrectAnswers.concat(correctAnswer)).forEach((el) => {
+    utils.shuffle(incorrectAnswers.concat(correctAnswer)).forEach((el) => {
         let option;
         // check whether the question relates to flags or not
         if (!title.includes('flag')) {
@@ -144,7 +143,7 @@ const finishSetup = () => {
 }
 
 const increment = () => {
-    const { difficulty } = getPlayerInfo();
+    const { difficulty } = utils.getPlayerInfo();
     
     if (count !== 14) {
         count++;

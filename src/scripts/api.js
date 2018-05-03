@@ -1,6 +1,5 @@
-import shuffle from './shuffle';
-import loading from './loading';
-import { getPlayerInfo } from './player';
+import loading from './helpers/loading';
+import utils from './utils';
 
 // excluded countries with missing region and subregion data
 const EXCLUDE_ONE = 'Antarctica';
@@ -40,7 +39,7 @@ const formatQuestion = (difficulty) => {
     }
 
     // shuffle the question titles
-    questionTitles = shuffle(questionTitles);
+    questionTitles = utils.shuffle(questionTitles);
     // countries for correct answers
     const questionsArr = countries.slice(0, 15);
     
@@ -117,7 +116,7 @@ const formatQuestion = (difficulty) => {
 const getIncorrect = (type) => {
     const { countries } = dataBank;
     
-    return shuffle(countries.slice(15)).map((country) => country[type])
+    return utils.shuffle(countries.slice(15)).map((country) => country[type])
             .splice(0, 3);
 }
 
@@ -168,7 +167,7 @@ const easyFilter = (countries) => {
 };
 
 export const fetchQuestions = () => {
-    const { difficulty } = getPlayerInfo();
+    const { difficulty } = utils.getPlayerInfo();
     
     loading(true);
     
@@ -178,7 +177,7 @@ export const fetchQuestions = () => {
             .then((response) => response.json())
             .then((data) => {
                 // format for easier countries and shuffle
-                dataBank.countries = shuffle(easyFilter(data));
+                dataBank.countries = utils.shuffle(easyFilter(data));
                 // create formatted questions
                 dataBank.formattedQuestions = formatQuestion('easy');
                 loading(false);
@@ -194,7 +193,7 @@ export const fetchQuestions = () => {
                 // format population number
                 formatPopulation(filteredCountries);
                 // shuffle remaining countries and format population number
-                dataBank.countries = shuffle(filteredCountries);
+                dataBank.countries = utils.shuffle(filteredCountries);
                 // create formatted questions
                 dataBank.formattedQuestions = formatQuestion('hard');
                 loading(false);

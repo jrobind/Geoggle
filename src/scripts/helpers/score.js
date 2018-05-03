@@ -1,4 +1,4 @@
-import routeHandler from './routes';
+import routeHandler from '../routes';
 
 export const updateScore = (points) => {
     const storageScore = JSON.parse(localStorage.getItem('current player'));
