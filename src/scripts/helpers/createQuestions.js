@@ -22,7 +22,6 @@ export default () => {
             elementRemover('#finish');
             // set the current question data
             questions = data;
-            console.log(data);
             // create the ui for the question
             questionCreator(data[count])
         });
