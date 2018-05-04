@@ -1,6 +1,9 @@
 import routeHandler from '../routes';
 import utils from '../utils';
 
+const scoreEl = document.querySelectorAll('#playerScore, #score h2');
+const scoreLevelDiv = document.querySelector('#scoreLevel');
+
 export const updateScore = (points) => {
     const storageScore = JSON.parse(localStorage.getItem('current player'));
     storageScore.score = storageScore.score + points;
@@ -11,13 +14,8 @@ export const updateScore = (points) => {
 export const handleScoreUi = () => {
     const { score, name, difficulty } = JSON.parse(localStorage.getItem('current player'));
     const { elementCreator } = utils;
-    const scoreTotal = difficulty === 'easy' ? 20 : 33;
+    const scoreTotal = difficulty === 'easy' ? 25 : 33;
     const scorePercentage = score/scoreTotal * 100;
-    const scoreEl = document.querySelectorAll('#playerScore, #score h2');
-    const scoreLevelDiv = document.querySelector('#scoreLevel');
-    
-    // render the score container
-    routeHandler.showScore();
     
     // set h2 player name text
     scoreEl[0].innerHTML = `${name}, you scored...`;
@@ -47,5 +45,17 @@ export const handleScoreUi = () => {
     }
     
     const iconSpan = elementCreator('span');
-    scoreLevelDiv.appendChild(iconEl);
+    iconSpan.appendChild(iconEl);
+    scoreLevelDiv.appendChild(iconSpan);   
+}
+
+export const resetScoreUi = () => {
+    const icon = document.querySelector('#scoreLevel span i');
+
+    if (scoreLevelDiv.firstChild) {
+        scoreEl[0].innerHTML = '';
+        scoreEl[1].innerHTML = '';
+        // remove icon
+        icon.parentElement.removeChild(icon);   
+    }
 }

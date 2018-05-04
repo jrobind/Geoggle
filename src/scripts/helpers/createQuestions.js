@@ -1,13 +1,15 @@
 import { fetchQuestions } from '../api';
+import routeHandler from '../routes';
 import utils from '../utils';
 import timer from './timer';
 import loading from './loading';
-import { updateScore, handleScoreUi } from './score';
+import { updateScore, handleScoreUi, resetScoreUi } from './score';
 const quiz = document.querySelector('#quiz');
 const imagesLoaded = require('imagesloaded');
 
 const { shuffle, elementCreator, formatTitle, elementRemover, classHandler } = utils;
-const { setTimer, resetTimer, questionCount } = timer;
+const { setTimer, resetTimer } = timer;
+const { showScore } = routeHandler;
 
 let count = 0;
 let questions;
@@ -120,13 +122,12 @@ const removeListeners = () => {
     [...document.querySelectorAll('li')].forEach((el) => el.removeEventListener('click', addSelect));
 }
 
-const finishSetup = () => {
+const finish = () => {
     elementRemover('#questionContainer');
-    // create 'see score' btn
-    const finishBtn = elementCreator('button', {id: 'finish', innerHTML: 'see score'})
-    // add handler
-    finishBtn.addEventListener('click', handleScoreUi);
-    quiz.appendChild(finishBtn);   
+    // render the score route
+    showScore();
+    resetScoreUi();
+    handleScoreUi();
 }
 
 const increment = () => {
@@ -140,7 +141,7 @@ const increment = () => {
         questionCreator(questions[count]);
     } else {
         difficulty === 'hard' ? resetTimer() : null;
-        finishSetup();
+        finish();
     }    
 }
 

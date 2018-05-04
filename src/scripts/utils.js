@@ -11,11 +11,10 @@ export default {
     getPlayerInfo() {
         return JSON.parse(localStorage.getItem('current player'));
     },
-    playerReset() {
-        const currentPlayerInfo = JSON.parse(localStorage.getItem('current player'));
-        currentPlayerInfo.score = 0;
-        currentPlayerInfo.firstGame = false;
-        localStorage.setItem('current player', JSON.stringify(currentPlayerInfo));
+    removePlayer() {
+        const nameInput = document.querySelector('.playername-container');
+        nameInput.classList.contains('no-show') ? nameInput.classList.remove('no-show') : null;
+        localStorage.clear();
     },
     duplicator(question, number = 3){
         const arr = [];

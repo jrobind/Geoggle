@@ -12,7 +12,7 @@ const easyFilter = (countries) => {
     // remove small islands and also remove countries within oceania region except for Australia and New Zealand
     const ausNz = countries.filter(({ name }) => name === 'Australia' || name === 'New Zealand');
     
-    return countries.filter(({ name, region }) => name !== AQ && !name.includes('Island') && region !== 'Oceania')
+    return countries.filter(({ name, region }) => name !== AQ && name !== VA && !name.includes('Island') && region !== 'Oceania')
         .concat(ausNz);
 };
 

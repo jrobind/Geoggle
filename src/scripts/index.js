@@ -5,7 +5,7 @@ import createQuestions from './helpers/createQuestions';
 import '../styles/style.scss';
 
 const difficultyElements = [...document.querySelectorAll('#easy, #hard')];
-const { classHandler } = utils;
+const { classHandler, removePlayer } = utils;
 const { showHome, showSetup, showQuiz } = routeHandler;
 
 // initialise the app on first load
@@ -25,29 +25,31 @@ difficultyElements.forEach((button) => {
 
 document.querySelector('#playerSetup').addEventListener('submit', (e) => {
     const playerName = document.querySelector('#playerName').value;
+    const difficulty = difficultyElements.filter((el) => el.classList.contains('selected'))[0].id;
+    const nameInput = document.querySelector('.playername-container');
+    // prevent form refresh
+    e.preventDefault();
 
-    if (!playerName) {
+    if (!playerName && !nameInput.classList.contains('no-show')) {
         alert('you must type a username');
-        e.preventDefault();
         document.querySelector('#playerSetup').reset();
     } else {
-        const difficulty = difficultyElements.filter((el) => el.classList.contains('selected'))[0].id;
         // setup player
-        playerSetup({playerName, difficulty});
+        !nameInput.classList.contains('no-show') ? playerSetup({playerName, difficulty}) :  playerSetup({playerName, difficulty, playAgain: true});
         showQuiz();
         // create questions
         createQuestions(); 
-        
-        e.preventDefault();
         document.querySelector('#playerSetup').reset();
     }
 });
 
 document.querySelector('#goHome').addEventListener('click', () => {
+    removePlayer();
     showHome();
 });
 
 document.querySelector('#playAgain').addEventListener('click', () => {
-    playerSetup({playerName: false, difficulty: false, playAgain: true});
+    // remove name input
+    document.querySelector('.playername-container').classList.add('no-show');
     showSetup();
 });
