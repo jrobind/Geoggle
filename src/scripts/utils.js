@@ -11,6 +11,12 @@ export default {
     getPlayerInfo() {
         return JSON.parse(localStorage.getItem('current player'));
     },
+    playerReset() {
+        const currentPlayerInfo = JSON.parse(localStorage.getItem('current player'));
+        currentPlayerInfo.score = 0;
+        currentPlayerInfo.firstGame = false;
+        localStorage.setItem('current player', JSON.stringify(currentPlayerInfo));
+    },
     duplicator(question, number = 3){
         const arr = [];
         for (let i = 0; i < number; i++) {
@@ -26,11 +32,17 @@ export default {
         const el = document.createElement(type);
         // process any attributes
         if (options) {
-            const { innerHTML, src, id } = options;
+            const { innerHTML, src, id, className } = options;
             
             innerHTML ? el.innerHTML = innerHTML : null;
             src ? el.setAttribute('src', src) : null;
             id ? el.id = id : null;
+            // check if there is more than one classname
+            if (Array.isArray(className)) {
+                className.forEach((name) => el.classList.add(name))
+            } else {
+                className ? el.classList.add(className) : null;   
+            }
         }
         
         return el;

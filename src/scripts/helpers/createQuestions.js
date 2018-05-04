@@ -7,6 +7,7 @@ const quiz = document.querySelector('#quiz');
 const imagesLoaded = require('imagesloaded');
 
 const { shuffle, elementCreator, formatTitle, elementRemover, classHandler } = utils;
+const { setTimer, resetTimer, questionCount } = timer;
 
 let count = 0;
 let questions;
@@ -38,6 +39,8 @@ const questionCreator = ({
     
     // begin building question ui
     const questionContainer = elementCreator('div', {id: 'questionContainer'});
+    // append question count
+    handleQuestionCount(questionContainer);
     const questionDiv = elementCreator('div', {id: 'question'});
     
     // determine whether we need a timer for hard difficulty
@@ -74,7 +77,7 @@ const questionCreator = ({
     questionContainer.appendChild(questionDiv);
     quiz.appendChild(questionContainer);
     // if difficulty is hard set the timer
-    difficulty === 'hard' ? timer.setTimer() : null;
+    difficulty === 'hard' ? setTimer() : null;
     
     // if question is for flags then load only once imgs have loaded
     if (title.includes('flag')) {
@@ -86,6 +89,14 @@ const questionCreator = ({
     } else {
         questionDiv.classList.remove('no-show');
     }
+}
+
+// helpers
+
+const handleQuestionCount = (container) => {
+    const currentCount = count + 1;
+    const counterDiv = elementCreator('div', {innerHTML: `question ${currentCount}/15`});
+    container.appendChild(counterDiv);
 }
 
 const handleFlagImg = (el) => {
@@ -110,7 +121,7 @@ const removeListeners = () => {
 }
 
 const finishSetup = () => {
-    elementRemover('#question');
+    elementRemover('#questionContainer');
     // create 'see score' btn
     const finishBtn = elementCreator('button', {id: 'finish', innerHTML: 'see score'})
     // add handler
@@ -124,11 +135,11 @@ const increment = () => {
     if (count !== 14) {
         count++;
         // reset countdown interval before removal
-        difficulty === 'hard' ? timer.resetTimer() : null;
-        elementRemover('#question');
+        difficulty === 'hard' ? resetTimer() : null;
+        elementRemover('#questionContainer');
         questionCreator(questions[count]);
     } else {
-        difficulty === 'hard' ? timer.resetTimer() : null;
+        difficulty === 'hard' ? resetTimer() : null;
         finishSetup();
     }    
 }
