@@ -7,37 +7,35 @@
         <title>Geoggle</title>
     </head>
     <body>
-        <div id="home">
-            <h1>Geoggle</h1>
-            <button id="start">Play</button>
-        </div>
-        
-        <div id="setup">
-            <p>USER SETUP</p>
-            <form id="playerSetup">
-                <label>Player nickname</label>
-                <input id="playerName" type="text">
-                <p>Select difficulty</p>
-                <label>
-                    Easy
-                    <input id="easy" name="difficulty" type="radio" checked="checked">
-                </label>
-                <label>
-                    Hard
-                    <input id="hard" name="difficulty" type="radio">
-                </label>
-                <input type="submit">
-            </form>
-        </div>
-        
-        <div id="quiz">
-            <p>QUIZ</p>
-            <div id="loading">LOADING...</div>
-        </div>
-        
-        <div id="score">
-            <p id="playerScore"></p>
-            <button id='restart'>go again</button>
+        <div class="wrapper">
+            <div id="home" class="home-container">
+                <div class="title">
+                    <h1>Geoggle</h1>
+                    <button id="start">Play</button>
+                </div>
+            </div>
+
+            <div id="setup" class="setup-container">
+                <p>USER SETUP</p>
+                <form id="playerSetup">
+                    <label>Player nickname</label>
+                    <input id="playerName" type="text">
+                    <p>Select difficulty</p>
+                    <a id="easy" class="selected">Easy</a>
+                    <a id="hard">Hard</a>
+                    <input type="submit">
+                </form>
+            </div>
+
+            <div id="quiz" class="quiz-container">
+                <p>QUIZ</p>
+                <div id="loading">LOADING...</div>
+            </div>
+
+            <div id="score" class="score-container">
+                <p id="playerScore"></p>
+                <button id='restart'>go again</button>
+            </div>
         </div>
     </body>
 </html>

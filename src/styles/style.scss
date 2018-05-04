@@ -58,7 +58,7 @@ body, html {
     padding: 0;
 }
 
-body, html, .wrapper, #home {
+body, html, .wrapper, .home-container {
     height: $maxHeight;
 }
 
@@ -70,14 +70,14 @@ body {
 
 // home
 
-#home, .title {
+.home-container, .title {
     @include flexbox();
     @include flex-direction(column);
     @include align-items(center);
     @include justify-content(center);
 }
 
-#home {
+.home-container {
     h1 {
         font-size: 4.5em;
         color: white;
