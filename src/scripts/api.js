@@ -2,16 +2,17 @@ import loading from './helpers/loading';
 import formatQuestion from './helpers/formatQuestion';
 import utils from './utils';
 
-// excluded countries with missing region and subregion data
-const EXCLUDE_ONE = 'Antarctica';
-const EXCLUDE_TWO = 'Heard Island and McDonald Islands';
-const EXCLUDE_THREE = 'Bouvet Island';
+// excluded countries with missing region and subregion data (stored as country abbreviation)
+const AQ = 'Antarctica';
+const HM = 'Heard Island and McDonald Islands';
+const BV = 'Bouvet Island';
+const VA = 'Holy See';
 
 const easyFilter = (countries) => {
     // remove small islands and also remove countries within oceania region except for Australia and New Zealand
     const ausNz = countries.filter(({ name }) => name === 'Australia' || name === 'New Zealand');
     
-    return countries.filter(({ name, region }) => name !== EXCLUDE_ONE && !name.includes('Island') && region !== 'Oceania')
+    return countries.filter(({ name, region }) => name !== AQ && !name.includes('Island') && region !== 'Oceania')
         .concat(ausNz);
 };
 
@@ -37,7 +38,7 @@ export const fetchQuestions = () => {
             .then((response) => response.json())
             .then((data) => {
                 // remove countries with missing data 
-                const filteredCountries = data.filter(({ name }) => name !== EXCLUDE_ONE && name !== EXCLUDE_TWO && name !== EXCLUDE_THREE);
+                const filteredCountries = data.filter(({ name }) => name !== AQ && name !== HM && name !== BV && name !== VA);
                 // format population number
                 utils.formatPopulation(filteredCountries);
                 // shuffle remaining countries, format population number and format questions
