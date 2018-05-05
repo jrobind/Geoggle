@@ -23,23 +23,23 @@ export const handleScoreUi = () => {
     // set score level
     if (scorePercentage < 40) {
         createIcon(elementCreator('i', {
-            className: ['fas', 'fa-leaf'],
-            innerHTML: `GeoNovice`
+            className: ['fa', 'fa-leaf'],
+            innerHTML: ` GeoNovice`
         }));
     } else if (scorePercentage > 40 && scorePercentage < 60) {
         createIcon(elementCreator('i', {
-            className: ['fas', 'fa-fire'],
-            innerHTML: `GeoHotshot`
+            className: ['fa', 'fa-fire'],
+            innerHTML: ` GeoHotshot`
         }));
     } else if (scorePercentage > 60 && scorePercentage < 85 ) {
         createIcon(elementCreator('i', {
-            className: ['fas', 'fa-bolt'],
-            innerHTML: `GeoPhenom`
+            className: ['fa', 'fa-bolt'],
+            innerHTML: ` GeoPhenom`
         }));
     } else if (scorePercentage > 85) {
         createIcon(elementCreator('i', {
-            className: ['fas', 'fa-chess-king'],
-            innerHTML: `GeoKing`
+            className: ['fa', 'fa-magic'],
+            innerHTML: ` GeoMage`
         }));
     }
 }
