@@ -24,8 +24,8 @@ $mainTextColour: white;
 }
 
 // default button mixins
-@mixin default-button() {
-    padding: 15px;
+@mixin default-button($padding) {
+    padding: $padding;
     width: 70%;
     background-color: $mainColour;
     border: none;
@@ -36,7 +36,7 @@ $mainTextColour: white;
     text-transform: uppercase;
     letter-spacing: 1px;
     cursor: pointer;
-    &:hover{
+    &:hover{ 
         background-color: transparent;
         transition: 0.4s;
     }
@@ -54,9 +54,10 @@ body, html, .wrapper, .home-container {
 }
 
 body {
-    background: #56ab2f; 
-    background: -webkit-linear-gradient(to right, #a8e063, #56ab2f); 
-    background: linear-gradient(to right, #a8e063, #56ab2f);
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    background: #DCE35B;  
+    background: -webkit-linear-gradient(to bottom, #45B649, #DCE35B);   
+    background: linear-gradient(to bottom, #45B649, #DCE35B); 
 }
 
 // home
@@ -70,15 +71,26 @@ body {
 .title {
     width: 100%;
     justify-content: center;
+    z-index: 1;
 }
 
-.title, .flag-container {
+.fa-globe {
+    font-size: 15em;
+    opacity: 0.65;
+    position: absolute;
+    z-index: -100;
+    color: #4189DD;
+    top: 30px;
+}
+
+.title, .flags-wrap {
     flex: 0 0 50%;
 }
 
-.home-container {
+.title {
+    min-height: 400px;
     h1 {
-        font-size: 4.8em;
+        font-size: 5em;
         margin: 0 0 20px 0;
         color: $mainTextColour;
         span {
@@ -92,13 +104,14 @@ body {
         font-size: 1.25em;
     }
     button {
-        @include default-button();
+        @include default-button(15px);
         width: 200px;
     }
 }
 
-.flag-container {
+.flags-wrap {
     @include flexbox();
+    min-height: 400px;
     width: 100%;
     .flags-left, .flags-right {
         @include flexbox();
@@ -106,22 +119,21 @@ body {
         align-items: flex-start;
         justify-content: flex-end;
         flex-basis: 50%;
+        margin: 0 4px;
     }
-    .flags-right {
+    .flags-right { 
        align-items: flex-end;
     }
     .img-container {
+        @include flexbox();
+        align-self: flex-end;
         width: 150px;
         height: 115px;
         border: 3px solid #282b34;
         border-radius: 10px;
         display: inline-block;
         overflow: hidden;
-        margin: 2px 2px;
         box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
-    }
-    .flag-block-1, .flag-block-2, .flag-block-3 {
-        @include flexbox();
     }
     .img-container img {
         max-width: 100%;
@@ -129,6 +141,10 @@ body {
         width: 100%;
         display: block;
     }
+}
+
+.flags-wrap-small {
+    display: none;
 }
 
 // general styles
@@ -145,4 +161,66 @@ body {
 img {
     opacity: 0.85;
     width: 200px;
+}
+
+@media screen and (max-width: 1000px) {
+    .flags-wrap .img-container {
+        width: 100px;
+        height: 80px;
+    }
+}
+
+@media screen and (max-width: 685px) {
+    .flags-wrap .img-container {
+        width: 130px;
+        height: 110px;
+    }
+    
+    .flags-wrap .flags-left, .flags-wrap .flags-right {
+        display: none;
+    }
+    
+    .flags-wrap-small {
+        @include flexbox();
+        @include flex-direction(column);
+        width: 100%;
+        align-self: flex-end;
+        .flag-container-small {
+            @include flexbox();
+            .img-container {
+                flex: 1;
+                margin: 2px;
+            }
+        } 
+    }
+}
+
+@media screen and (max-width: 535px) {
+    .fa-globe {
+        font-size: 13em;
+        right: 5%;
+    }
+    .flags-wrap .img-container {
+        width: 100px;
+        height: 95px;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .title {
+        h1 {
+            font-size: 3.7em;
+        }
+        p {
+            font-size: 0.9em;
+        }
+        button {
+            @include default-button(10px);
+            width: 170px;
+        }
+    }
+    .flags-wrap .img-container {
+        width: 70px;
+        height: 65px;
+    }
 }
