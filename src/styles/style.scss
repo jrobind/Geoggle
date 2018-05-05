@@ -49,15 +49,16 @@ body, html {
     padding: 0;
 }
 
-body, html, .wrapper, .home-container {
+body, html, .wrapper {
     height: $maxHeight;
+    width: 100%;
 }
 
 body {
     font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
     background: #DCE35B;  
     background: -webkit-linear-gradient(to bottom, #45B649, #DCE35B);   
-    background: linear-gradient(to bottom, #45B649, #DCE35B); 
+    background: linear-gradient(to bottom, #45B649, #DCE35B);
 }
 
 // home
@@ -65,7 +66,12 @@ body {
 .home-container, .title {
     @include flexbox();
     @include flex-direction(column);
+    box-sizing: border-box;
     align-items: center;
+}
+
+.home-container {
+    height: 100%;
 }
 
 .title {
@@ -84,11 +90,10 @@ body {
 }
 
 .title, .flags-wrap {
-    flex: 0 0 50%;
+    flex: 1;
 }
 
 .title {
-    min-height: 400px;
     h1 {
         font-size: 5em;
         margin: 0 0 20px 0;
@@ -111,7 +116,7 @@ body {
 
 .flags-wrap {
     @include flexbox();
-    min-height: 400px;
+    padding-top: 50px;
     width: 100%;
     .flags-left, .flags-right {
         @include flexbox();
@@ -203,6 +208,12 @@ img {
     .flags-wrap .img-container {
         width: 100px;
         height: 95px;
+    }
+}
+
+@media screen and (max-width: 1000px) and (orientation:landscape) {
+    body, html, .home-container {
+        min-height: 700px;
     }
 }
 
