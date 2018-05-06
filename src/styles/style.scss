@@ -127,6 +127,17 @@ img {
     width: 200px;
 }
 
+// setup styles
+
+.setup-container, .setup-wrap {
+    @include flexbox();
+    @include flex-direction(column);
+    margin: auto;
+}
+
+
+// media queries
+
 @media screen and (max-width: 1000px) {
     .flags-wrap .img-container {
         width: 100px;
@@ -170,7 +181,7 @@ img {
     }
 }
 
-@media screen and (max-width: 1000px) and (orientation:landscape) {
+@media screen and (orientation: landscape) {
     body, html, .home-container {
         min-height: 700px;
     }

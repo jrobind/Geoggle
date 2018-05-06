@@ -14,7 +14,7 @@
                     <h1>
                         Geoggle
                     </h1>
-                    <p>The Countries Of The World Quiz Game.</p>
+                    <p>The Countries Of The World Quiz Game</p>
                     <button id="start">Play</button>
                     <p><i class="fa fa-globe" aria-hidden="true"></i></p>
                 </div>
@@ -74,17 +74,19 @@
             </div>
 
             <div id="setup" class="setup-container">
-                <p>USER SETUP</p>
-                <form id="playerSetup">
-                    <div class="playername-container">
-                        <label>Player nickname</label>
-                        <input id="playerName" type="text">
-                    </div>
-                    <p>Select difficulty</p>
-                    <a id="easy" class="selected">Easy</a>
-                    <a id="hard">Hard</a>
-                    <input type="submit">
-                </form>
+                <div class="setup-wrap">
+                    <h1>Before you begin...</h1>
+                    <form id="playerSetup">
+                        <div class="playername-container">
+                            <p>1. Set a quiz nickname</p>
+                            <input id="playerName" type="text">
+                        </div>
+                        <p>2. Select difficulty</p>
+                        <a id="easy" class="selected">Easy</a>
+                        <a id="hard">Hard</a>
+                        <input type="submit">
+                    </form>
+                </div>
             </div>
 
             <div id="quiz" class="quiz-container">
