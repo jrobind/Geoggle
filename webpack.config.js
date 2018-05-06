@@ -15,7 +15,7 @@ module.exports = {
                 {loader: 'css-loader'},
                 {loader: 'sass-loader'}
             ]},
-            {test: /\.(png|jpg)$/, loader: 'file-loader' options: {
+            {test: /\.(png|jpg)$/, loader: 'file-loader', options: {
                 name:'/images/[name]_[hash:7].[ext]'
             }},
             {test: /\.html$/, loader: 'html-loader'}
