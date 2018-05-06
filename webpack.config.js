@@ -15,7 +15,10 @@ module.exports = {
                 {loader: 'css-loader'},
                 {loader: 'sass-loader'}
             ]},
-            {test: /\.(png|jpg)$/, loader: 'url-loader?linit=8192'}
+            {test: /\.(png|jpg)$/, loader: 'file-loader' options: {
+                name:'/images/[name]_[hash:7].[ext]'
+            }},
+            {test: /\.html$/, loader: 'html-loader'}
         ]
     },
     devtool: 'source-map',
