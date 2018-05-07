@@ -1,5 +1,6 @@
 import loading from './helpers/loading';
 import formatQuestion from './helpers/formatQuestion';
+import 'isomorphic-fetch';
 import utils from './utils';
 
 // excluded countries with missing region and subregion data (stored as country abbreviation)
