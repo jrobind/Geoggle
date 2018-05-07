@@ -9,6 +9,7 @@
     </head>
     <body>
         <div class="wrapper">
+            <!--title/home-->
             <div id="home" class="home-container">
                 <div class="title">
                     <h1>
@@ -18,61 +19,8 @@
                     <button id="start">Play</button>
                     <p><i class="fa fa-globe" aria-hidden="true"></i></p>
                 </div>
-                <div class="flags-wrap">
-                    <!--large devices-->
-                    <div class="flags-left">
-                        <div class="flag-container-1">
-                            <div class="img-container"><img src="./images/us.png"></div> 
-                        </div>
-                        <div class="flag-container-2">
-                            <div class="img-container"><img src="./images/ch.png"></div> 
-                            <div class="img-container"><img src="./images/br.png"></div> 
-                        </div>
-                        <div class="flag-container-3">
-                            <div class="img-container"><img src="./images/mx.png"></div> 
-                            <div class="img-container"><img src="./images/ph.png"></div> 
-                            <div class="img-container"><img src="./images/na.png"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="flags-right">
-                        <div class="flag-container-1">
-                            <div class="img-container"><img src="./images/rs.png"></div>
-                        </div>
-                        <div class="flag-container-2">
-                            <div class="img-container"><img src="./images/se.png"></div>
-                            <div class="img-container"><img src="./images/so.png"></div>
-                        </div>
-                        <div class="flag-container-3">
-                            <div class="img-container"><img src="./images/tn.png"></div>
-                            <div class="img-container"><img src="./images/uk.png"></div> 
-                            <div class="img-container"><img src="./images/za.png"></div>
-                        </div>
-                    </div>
-                    <!--small devices-->
-                    <div class="flags-wrap-small">
-                        <div class="flag-container-small">
-                            <div class="img-container"><img src="./images/us.png"></div> 
-                            <div class="img-container"><img src="./images/ch.png"></div> 
-                            <div class="img-container"><img src="./images/ph.png"></div> 
-                            <div class="img-container"><img src="./images/mx.png"></div> 
-                        </div>
-                        <div class="flag-container-small">
-                            <div class="img-container"><img src="./images/ph.png"></div> 
-                            <div class="img-container"><img src="./images/na.png"></div>
-                            <div class="img-container"><img src="./images/rs.png"></div>
-                            <div class="img-container"><img src="./images/se.png"></div>
-                        </div>
-                        <div class="flag-container-small">
-                            <div class="img-container"><img src="./images/so.png"></div>
-                            <div class="img-container"><img src="./images/tn.png"></div>
-                            <div class="img-container"><img src="./images/uk.png"></div> 
-                            <div class="img-container"><img src="./images/za.png"></div>
-                        </div>
-                    </div>
-                </div>
             </div>
-
+            <!--setup-->
             <div id="setup" class="setup-container">
                 <div class="setup-wrap">
                     <h1>Before you begin...</h1>
@@ -82,18 +30,22 @@
                             <input id="playerName" type="text">
                         </div>
                         <p>2. Select difficulty</p>
-                        <a id="easy" class="selected">Easy</a>
-                        <a id="hard">Hard</a>
-                        <input type="submit">
+                        <div class="select-difficulty">
+                            <div>
+                                <a id="easy" class="selected-diff">Easy</a>
+                                <a id="hard">Hard</a>
+                            </div>
+                            <input type="submit">
+                        </div>
                     </form>
                 </div>
             </div>
-
+            <!--quiz-->
             <div id="quiz" class="quiz-container">
                 <p>QUIZ</p>
                 <div id="loading">LOADING...</div>
             </div>
-
+            <!--score/results-->
             <div id="score" class="score-container">
                 <h2></h2>
                 <p id="playerScore"></p>

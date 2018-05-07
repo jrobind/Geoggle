@@ -1,3 +1,5 @@
+@import 'variables';
+
 // mixins
 
 // flexbox mixins
@@ -20,13 +22,13 @@
 // default button mixins
 @mixin default-button($padding) {
     padding: $padding;
-    width: 70%;
     background-color: $mainColour;
     border: none;
     color: $mainTextColour;
     border: 2px solid $mainColour;
     border-radius: 5px;
     font-size: 0.9em;
+    font-weight: $bold;
     text-transform: uppercase;
     letter-spacing: 1px;
     cursor: pointer;
@@ -34,4 +36,12 @@
         background-color: transparent;
         transition: 0.4s;
     }
+}
+
+// h1 style
+@mixin h1-style($fontSize) {
+    font-size: $fontSize;
+    color: $mainTextColour;
+    margin: 0 0 20px 0;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
 }

@@ -17,7 +17,7 @@ document.querySelector('#start').addEventListener('click', showSetup);
 difficultyElements.forEach((button) => {
     button.addEventListener('click', ({target}) => {
         classHandler(target, {
-            className: 'selected', 
+            className: 'selected-diff', 
             allElements: difficultyElements
         });
     });  
@@ -25,7 +25,7 @@ difficultyElements.forEach((button) => {
 
 document.querySelector('#playerSetup').addEventListener('submit', (e) => {
     const playerName = document.querySelector('#playerName').value;
-    const difficulty = difficultyElements.filter((el) => el.classList.contains('selected'))[0].id;
+    const difficulty = difficultyElements.filter((el) => el.classList.contains('selected-diff'))[0].id;
     const nameInput = document.querySelector('.playername-container');
     // prevent form refresh
     e.preventDefault();

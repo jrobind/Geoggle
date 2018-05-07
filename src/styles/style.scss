@@ -20,51 +20,45 @@ body {
     background: linear-gradient(to bottom, #45B649, #DCE35B);
 }
 
-// home
-
-.home-container, .title {
+.home-container, .title, .setup-container, .setup-wrap, .select-difficulty, #playerSetup {
     @include flexbox();
     @include flex-direction(column);
     box-sizing: border-box;
-    align-items: center;
 }
+
+// home
 
 .home-container {
-    height: 100%;
-}
-
-.title {
-    width: 100%;
+    height: $maxHeight;
     justify-content: center;
-    z-index: 1;
+    align-items: center;
 }
 
 .fa-globe {
     font-size: 15em;
-    opacity: 0.65;
+    opacity: 0.8;
     position: absolute;
+    top: -95px;
     z-index: -100;
     color: #4189DD;
-    top: 30px;
 }
 
-.title, .flags-wrap {
-    flex: 1;
+.title {
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
 }
 
 .title {
     h1 {
-        font-size: 5em;
-        margin: 0 0 20px 0;
-        color: $mainTextColour;
-        span {
-            padding: 0 2px;
-        }
+        @include h1-style(5.3em);
     }
     p {
         margin: 0 0 30px 0;
-        color: #30601b;
-        font-weight: 600;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+        color: $secondaryColour;
+        font-weight: $bold;
         font-size: 1.25em;
     }
     button {
@@ -73,42 +67,47 @@ body {
     }
 }
 
-.flags-wrap {
-    @include flexbox();
-    padding-top: 50px;
-    width: 100%;
-    .flags-left, .flags-right {
-        @include flexbox();
-        @include flex-direction(column);
-        align-items: flex-start;
-        justify-content: flex-end;
-        flex-basis: 50%;
-        margin: 0 4px;
-    }
-    .flags-right { 
-       align-items: flex-end;
-    }
-    .img-container {
-        @include flexbox();
-        align-self: flex-end;
-        width: 150px;
-        height: 115px;
-        border: 3px solid #282b34;
-        border-radius: 10px;
-        display: inline-block;
-        overflow: hidden;
-        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
-    }
-    .img-container img {
-        max-width: 100%;
-        height: 100%;
-        width: 100%;
-        display: block;
-    }
-}
+// setup styles
 
-.flags-wrap-small {
-    display: none;
+.setup-wrap {
+    margin: 50px auto 0 auto;
+    h1 {
+        @include h1-style(3em);
+    }
+    #playerSetup {
+        align-items: center;
+        p {
+            font-weight: $bold;
+            color: $secondaryColour;
+            font-size: 1.2em;
+            text-align: center;
+        }
+        .select-difficulty div {
+            @include flexbox();
+            justify-content: center;
+        }
+        a {
+            margin: 20px 10px;
+            font-size: 1.2em;
+            padding: 5px;
+            color: $secondaryColour;
+            font-weight: $bold;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+        input[type='text'] {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin: auto;
+        }
+        input[type='submit'] {
+            @include default-button(10px);
+            margin: auto;
+            width: 189px;
+        }   
+    }
 }
 
 // general styles
@@ -122,68 +121,22 @@ body {
     color: red;
 }
 
+.selected-diff {
+    border: 2px solid rgba(185, 25, 25, 0.8);
+    border-radius: 5px;
+}
+
 img {
     opacity: 0.85;
     width: 200px;
 }
 
-// setup styles
-
-.setup-container, .setup-wrap {
-    @include flexbox();
-    @include flex-direction(column);
-    margin: auto;
-}
-
-
 // media queries
-
-@media screen and (max-width: 1000px) {
-    .flags-wrap .img-container {
-        width: 100px;
-        height: 80px;
-    }
-}
-
-@media screen and (max-width: 685px) {
-    .flags-wrap .img-container {
-        width: 130px;
-        height: 110px;
-    }
-    
-    .flags-wrap .flags-left, .flags-wrap .flags-right {
-        display: none;
-    }
-    
-    .flags-wrap-small {
-        @include flexbox();
-        @include flex-direction(column);
-        width: 100%;
-        align-self: flex-end;
-        .flag-container-small {
-            @include flexbox();
-            .img-container {
-                flex: 1;
-                margin: 2px;
-            }
-        } 
-    }
-}
 
 @media screen and (max-width: 535px) {
     .fa-globe {
         font-size: 13em;
         right: 5%;
-    }
-    .flags-wrap .img-container {
-        width: 100px;
-        height: 95px;
-    }
-}
-
-@media screen and (orientation: landscape) {
-    body, html, .home-container {
-        min-height: 700px;
     }
 }
 
@@ -199,9 +152,5 @@ img {
             @include default-button(10px);
             width: 170px;
         }
-    }
-    .flags-wrap .img-container {
-        width: 70px;
-        height: 65px;
     }
 }
