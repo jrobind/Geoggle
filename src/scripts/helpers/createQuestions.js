@@ -153,15 +153,17 @@ const addSelect = ({ target }) => {
     const isFlag = target.nodeName === 'IMG' ? true : false;
     
     // add selected style
-    classHandler(isFlag ? target.parentElement.parentElement : target, {
+    classHandler(isFlag ? target.parentElement : target, {
         className: 'selected', 
-        allElements: [...document.querySelectorAll('#question li')]
+        allElements: isFlag ? [...document.querySelectorAll('.img-container')] : [...document.querySelectorAll('#question li')]
     });
 }
 
-const incrementHandler = () => {
+const incrementHandler = ({ target }) => {
     const { correctAnswer, points, title } = questions[count];
-    const checkedAnswers = [...document.querySelectorAll('#question li')].filter((el) => el.classList.contains('selected'));
+    const isFlag = target.parentElement.childNodes[2].childNodes[0].firstElementChild ? true : false;
+    const selector = isFlag ? '.img-container' : '#question li';
+    const checkedAnswers = [...document.querySelectorAll(selector)].filter((el) => el.classList.contains('selected'));
     
     // if user tries to progress to next question but has not selected an answer, then alert them
     if (!checkedAnswers.length) {
