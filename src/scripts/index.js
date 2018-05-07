@@ -31,7 +31,7 @@ document.querySelector('#playerSetup').addEventListener('submit', (e) => {
     e.preventDefault();
 
     if (!playerName && !nameInput.classList.contains('no-show')) {
-        alert('you must type a username');
+        alert('Please set a nickname');
         document.querySelector('#playerSetup').reset();
     } else {
         // setup player
@@ -53,9 +53,3 @@ document.querySelector('#playAgain').addEventListener('click', () => {
     document.querySelector('.playername-container').classList.add('no-show');
     showSetup();
 });
-
-
-// set autofocus on nickname/playername input when on setup
-if (!document.querySelector('#setup').classList.contains('no-show')) {
-    document.querySelector('#playerName').autofocus = true;
-}
