@@ -160,8 +160,10 @@ const addSelect = ({ target }) => {
 }
 
 const incrementHandler = ({ target }) => {
+    const { difficulty } = utils.getPlayerInfo();
     const { correctAnswer, points, title } = questions[count];
-    const isFlag = target.parentElement.childNodes[2].childNodes[0].firstElementChild ? true : false;
+    const nodeNum = difficulty === 'hard' ? 3 : 2;
+    const isFlag = target.parentElement.childNodes[nodeNum].childNodes[0].firstElementChild ? true : false;
     const selector = isFlag ? '.img-container' : '#question li';
     const checkedAnswers = [...document.querySelectorAll(selector)].filter((el) => el.classList.contains('selected'));
     

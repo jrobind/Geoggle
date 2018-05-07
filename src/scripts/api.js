@@ -1,53 +1,39 @@
+import 'isomorphic-fetch';
 import loading from './helpers/loading';
 import formatQuestion from './helpers/formatQuestion';
-import 'isomorphic-fetch';
+import exclude from './exclude';
 import utils from './utils';
 
-// excluded countries with missing region and subregion data (stored as country abbreviation)
-const AQ = 'Antarctica';
-const HM = 'Heard Island and McDonald Islands';
-const BV = 'Bouvet Island';
-const VA = 'Holy See';
-
-const easyFilter = (countries) => {
-    // remove small islands and also remove countries within oceania region except for Australia and New Zealand
-    const ausNz = countries.filter(({ name }) => name === 'Australia' || name === 'New Zealand');
+const countryFilter = (countries) => {
+    // remove countries without png flag reference
+    const filtered = countries.filter(({ name }) => !exclude.includes(name))
+    // switch incorrect country code for Kosovo flag
+    filtered.forEach((country, index, array) => {
+        if (country.name === 'Republic of Kosovo') {
+            array[index].alpha2Code = 'KS';
+        }
+    });
     
-    return countries.filter(({ name, region }) => name !== AQ && name !== VA && !name.includes('Island') && region !== 'Oceania')
-        .concat(ausNz);
+    return filtered;
 };
 
 export const fetchQuestions = () => {
     const { difficulty } = utils.getPlayerInfo();
-    const { shuffle } = utils;
+    const { shuffle, formatFlagLink, formatPopulation } = utils;
+    const URL = difficulty === 'easy' ? 'https://restcountries.eu/rest/v2/all?fields=name;capital;flag;region;alpha2Code' : 
+    'https://restcountries.eu/rest/v2/all?fields=name;capital;flag;population;region;subregion;alpha2Code';
     
     loading(true);
     
-    // determine diffculty mode
-    if (difficulty === 'easy') {
-        return fetch('https://restcountries.eu/rest/v2/all?fields=name;capital;flag;region;')
-            .then((response) => response.json())
-            .then((data) => {
-                // format for easier countries, shuffle, and format questions
-                const formatted = formatQuestion(shuffle(easyFilter(data)), 'easy');
-                loading(false);
-                return formatted;
-            })
-            .catch((error) => console.log(error)); 
-    } else {
-        return fetch('https://restcountries.eu/rest/v2/all?fields=name;capital;flag;population;region;subregion')
-            .then((response) => response.json())
-            .then((data) => {
-                // remove countries with missing data 
-                const filteredCountries = data.filter(({ name }) => name !== AQ && name !== HM && name !== BV && name !== VA);
-                // format population number
-                utils.formatPopulation(filteredCountries);
-                // shuffle remaining countries, format population number and format questions
-                const formatted = formatQuestion(shuffle(filteredCountries), 'hard');
-                loading(false);
-                return formatted;
-            })
-            .catch((error) => console.log(error));    
-    }
-    
+    // make api call and format results
+    return fetch(URL)
+        .then((response) => response.json())
+        .then((data) => {
+            const formattedCountries = difficulty === 'hard' ? formatFlagLink(formatPopulation(countryFilter(data))) : formatFlagLink(countryFilter(data));
+        console.log(formattedCountries)
+            // create formatted questions from countries array and shuffle
+            const finalFormat = formatQuestion(shuffle(formattedCountries, difficulty));
+            loading(false);
+            return finalFormat;
+        });
 }
