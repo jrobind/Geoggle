@@ -40,8 +40,6 @@ const questionCreator = ({
     
     // begin building question ui
     const questionContainer = elementCreator('div', {id: 'questionContainer'});
-    // append question count
-    handleQuestionCount(questionContainer);
     const questionDiv = elementCreator('div', {id: 'question'});
     
     // determine whether we need a timer for hard difficulty
@@ -71,6 +69,8 @@ const questionCreator = ({
     });
     
     questionDiv.appendChild(questionTitle);
+    // append question count
+    handleQuestionCount(questionDiv);
     questionDiv.appendChild(questionUl);
     questionDiv.appendChild(nextQuestionBtn());
     // initially set quiz div to display: none, in case we need to wait for flag img loading
@@ -96,7 +96,7 @@ const questionCreator = ({
 
 const handleQuestionCount = (container) => {
     const currentCount = count + 1;
-    const counterDiv = elementCreator('div', {innerHTML: `question ${currentCount}/15`});
+    const counterDiv = elementCreator('p', {innerHTML: `Question ${currentCount}/15`});
     container.appendChild(counterDiv);
 }
 
