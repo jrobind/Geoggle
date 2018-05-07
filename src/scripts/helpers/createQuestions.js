@@ -102,8 +102,11 @@ const handleQuestionCount = (container) => {
 
 const handleFlagImg = (el) => {
     const liEl = elementCreator('li');
+    const imgContainer = elementCreator('div', {className: 'img-container'});
     const imgEl = elementCreator('img', {src: el});
-    liEl.appendChild(imgEl);
+    
+    imgContainer.appendChild(imgEl);
+    liEl.appendChild(imgContainer);
     // add handler to li containing flag img
     liEl.addEventListener('click', addSelect);
     
@@ -150,7 +153,7 @@ const addSelect = ({ target }) => {
     const isFlag = target.nodeName === 'IMG' ? true : false;
     
     // add selected style
-    classHandler(isFlag ? target.parentElement : target, {
+    classHandler(isFlag ? target.parentElement.parentElement : target, {
         className: 'selected', 
         allElements: [...document.querySelectorAll('#question li')]
     });
