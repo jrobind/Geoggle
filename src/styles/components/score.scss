@@ -1,0 +1,40 @@
+@import '../utils/variables';
+@import '../utils/mixins';
+
+.score-container {
+    @include flexbox();
+    @include flex-direction(column);
+    @include align-items(center);
+    h2 {
+        @include heading($largeFont);
+        margin-top: 50px;
+    }
+    p, #scoreLevel {
+        font-size: $mediumFont;
+        margin-bottom: 30px;
+    }
+    p {
+        color: $secondaryColour;
+        font-weight: $bold;
+    }
+    #scoreLevel {
+        i {
+            font-size: $largeFont;
+            color: $secondaryColour;
+        }
+        span {
+            color: $mainTextColour;
+            font-weight: $bold;  
+            font-size: $standardFont;
+        }
+    }
+    .finish-options {
+        @include flexbox();
+        @incldue justify-content();
+        a {
+            @include default-button(10px);
+            margin: 20px 10px 0 10px;
+            width: 145px;
+        }
+    }
+}

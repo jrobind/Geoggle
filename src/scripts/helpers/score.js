@@ -13,6 +13,7 @@ export const updateScore = (points) => {
 
 export const handleScoreUi = () => {
     const { score, name, difficulty } = JSON.parse(localStorage.getItem('current player'));
+    // determine score total in relation to difficulty
     const scoreTotal = difficulty === 'easy' ? 25 : 33;
     const scorePercentage = score/scoreTotal * 100;
     
@@ -22,25 +23,28 @@ export const handleScoreUi = () => {
     
     // set score level
     if (scorePercentage < 40) {
+        
         createIcon(elementCreator('i', {
-            className: ['fa', 'fa-leaf'],
-            innerHTML: ` GeoNovice`
-        }));
+            className: ['fa', 'fa-leaf']
+        }), ' GeoNovice');
+        
     } else if (scorePercentage > 40 && scorePercentage < 60) {
+        
         createIcon(elementCreator('i', {
-            className: ['fa', 'fa-fire'],
-            innerHTML: ` GeoHotshot`
-        }));
+            className: ['fa', 'fa-bolt']
+        }), ' GeoPhenom');
+        
     } else if (scorePercentage > 60 && scorePercentage < 85 ) {
+        
         createIcon(elementCreator('i', {
-            className: ['fa', 'fa-bolt'],
-            innerHTML: ` GeoPhenom`
-        }));
+            className: ['fa', 'fa-rocket']
+        }), ' GeoRocket');
+        
     } else if (scorePercentage > 85) {
+        
         createIcon(elementCreator('i', {
-            className: ['fa', 'fa-magic'],
-            innerHTML: ` GeoMage`
-        }));
+            className: ['fa', 'fa-magic']
+        }), ' GeoMage');
     }
 }
 
@@ -55,8 +59,8 @@ export const resetScoreUi = () => {
     }
 }
 
-const createIcon = (iconEl) => {
-    const iconSpan = elementCreator('span');
-    iconSpan.appendChild(iconEl);
-    scoreLevelDiv.appendChild(iconSpan);   
+const createIcon = (iconEl, text) => {
+    const iconText = elementCreator('span', {innerHTML: text});
+    scoreLevelDiv.appendChild(iconEl);
+    scoreLevelDiv.appendChild(iconText);
 }

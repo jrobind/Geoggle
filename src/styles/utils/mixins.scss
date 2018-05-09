@@ -67,6 +67,7 @@
     border: none;
     color: $mainTextColour;
     border: 2px solid $mainColour;
+    text-align: center;
     border-radius: 5px;
     font-size: 0.9em;
     font-weight: $bold;
@@ -79,7 +80,7 @@
     }
 }
 
-// h1 style
+// heading
 
 @mixin heading($fontSize) {
     font-size: $fontSize;

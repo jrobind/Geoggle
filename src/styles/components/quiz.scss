@@ -47,7 +47,7 @@
 
 // timer
 
-p {
+#timer, #questionContainer p {
     text-align: center;
     color: $secondaryColour;
     font-weight: $bold;
@@ -67,7 +67,7 @@ p {
     @include align-items(center);
     list-style: none;
     text-align: center;
-    color: white;
+    color: $mainTextColour;
     padding: 10px;
     font-weight: $bold;
     font-size: $answerFont;
@@ -80,7 +80,7 @@ p {
 
 .img-container {
     background-color: $flagColour;
-    width: 165px;
+    width: 185px;
     height: 135px;
     border: 5px solid $flagColour;
     border-radius: 10px;
