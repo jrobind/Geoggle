@@ -61,7 +61,7 @@ const questionCreator = ({
         let option;
         // check whether the question relates to flags or not
         if (!isFlag) {
-            option = elementCreator('li', {innerHTML: el})
+            option = elementCreator('li', {innerHTML: el, className: 'answer'});
             option.addEventListener('click', addSelect);
         } else {
             option = handleFlagImg(el); 
