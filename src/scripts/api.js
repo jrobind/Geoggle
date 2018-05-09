@@ -22,8 +22,8 @@ export const fetchQuestions = () => {
     const { shuffle, formatFlagLink, formatPopulation } = utils;
     const URL = difficulty === 'easy' ? 'https://restcountries.eu/rest/v2/all?fields=name;capital;region;alpha2Code' : 
     'https://restcountries.eu/rest/v2/all?fields=name;capital;population;region;subregion;alpha2Code';
-    
-    loading(true);
+
+    loading({loadingState: true});
     
     // make api call and format results
     return fetch(URL)
@@ -33,7 +33,7 @@ export const fetchQuestions = () => {
         console.log(formattedCountries)
             // create formatted questions from countries array and shuffle
             const finalFormat = formatQuestion(shuffle(formattedCountries, difficulty));
-            loading(false);
+            loading({loadingState: false});
             return finalFormat;
         });
 }
