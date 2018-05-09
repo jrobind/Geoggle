@@ -7,6 +7,9 @@
         @include heading($largeFont);
         @include align-self(center);
     }
+    
+    // form 
+    
     #playerSetup {
         @include align-items(center);
         p {
@@ -14,6 +17,7 @@
             color: $secondaryColour;
             font-size: $standardFont;
             text-align: center;
+            margin: 15px 0;
         }
         .select-difficulty div {
             @include flexbox();
@@ -29,6 +33,9 @@
                 cursor: pointer;
             }
         }
+        
+        // form inputs
+        
         input[type='text'] {
             padding: 10px;
             border: none;

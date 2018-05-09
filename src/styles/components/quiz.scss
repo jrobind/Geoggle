@@ -19,26 +19,23 @@
         @include align-self(center); /*IE11*/
         width: 100%; /*IE11*/
     }
-    p {
-        text-align: center;
-        color: $secondaryColour;
-        font-weight: $bold;
-        font-size: $standardFont;
-        margin: 10px 0 50px 0;
-    }
     ul, .answer-container {
         @include flexbox();
         @include flex-direction(row);
         @include flex-wrap(wrap);
+        @include align-self(center); /*IE11*/
+        max-width: 800px;
+        width: 100%; /*IE11*/
+        margin: auto;
     }
     .answer, .flag-answer {
-        @include flex-basis(45%);
         &:hover {
             cursor: pointer;
             opacity: 0.65;
         }
     }
     .flag-answer {
+        @include flex(1 0 47%);
         margin: 8px;
     }
     button {
@@ -48,9 +45,26 @@
     }
 }
 
+// timer
+
+p {
+    text-align: center;
+    color: $secondaryColour;
+    font-weight: $bold;
+    font-size: $standardFont;
+    margin: 10px 0 30px 0;
+}
+
 // answers
 
+.img-container, .answer {
+    @include flexbox();
+    @include justify-content(center); 
+}
+
 .answer {
+    @include flex(1 0 44%);
+    @include align-items(center);
     list-style: none;
     text-align: center;
     color: white;
@@ -60,12 +74,11 @@
     border: 5px solid $secondaryColour;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
     background-color: $secondaryColour;
-    margin: 5px;
+    margin: 8px;
+    min-width: 260px;
 }
 
 .img-container {
-    @include flexbox();
-    @include justify-content(center);
     background-color: $flagColour;
     width: 165px;
     height: 135px;

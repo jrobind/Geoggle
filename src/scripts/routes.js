@@ -10,7 +10,7 @@ const routeHandler = {
     showSetup() {
         handleClass('setup');
         // set autofocus on nickname/playername input
-        document.querySelector('#playerName').autofocus = true;
+        document.querySelector('#playerName').focus();
     },
     showQuiz() {
         handleClass('quiz');

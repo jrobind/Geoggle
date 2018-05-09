@@ -16,6 +16,10 @@ export default {
                 // move to next question
                 forceNextQuestion();
             }
+            // last 5 seconds add countdown warning class
+            if (counter <= 6) {
+                time.classList.add('warning');
+            }
             counter--;
             time.innerHTML = `00:0${counter}`;
         }, 1000);    

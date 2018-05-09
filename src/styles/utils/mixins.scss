@@ -26,11 +26,12 @@
           flex-wrap: $wrap;
 }
 
-@mixin flex-basis($width) {
-  -webkit-flex-basis: $width;
-     -moz-flex-basis: $width;
-      -ms-flex-basis: $width;
-          flex-basis: $width;
+@mixin flex($values) {
+  -webkit-box-flex: $values;
+     -moz-box-flex: $values;
+      -webkit-flex: $values;
+  	  -ms-flex: $values;
+  	      flex: $values;
 }
 
 // flex-start | flex-end | center | space-between | space-around 

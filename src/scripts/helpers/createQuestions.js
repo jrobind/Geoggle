@@ -83,7 +83,7 @@ const questionCreator = ({
     
     // if question is for flags then load only once all imgs have loaded
     if (isFlag) {
-        loading({loadingState: true, text: 'LOADING FLAGS...'});
+        loading({loadingState: true, text: 'LOADING QUESTION...'});
         imagesLoaded(document.querySelector('.answer-container'), () => {
             loading({loadingState: false});
             questionContainer.classList.remove('no-show');
