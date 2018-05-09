@@ -20,8 +20,8 @@ const countryFilter = (countries) => {
 export const fetchQuestions = () => {
     const { difficulty } = utils.getPlayerInfo();
     const { shuffle, formatFlagLink, formatPopulation } = utils;
-    const URL = difficulty === 'easy' ? 'https://restcountries.eu/rest/v2/all?fields=name;capital;flag;region;alpha2Code' : 
-    'https://restcountries.eu/rest/v2/all?fields=name;capital;flag;population;region;subregion;alpha2Code';
+    const URL = difficulty === 'easy' ? 'https://restcountries.eu/rest/v2/all?fields=name;capital;region;alpha2Code' : 
+    'https://restcountries.eu/rest/v2/all?fields=name;capital;population;region;subregion;alpha2Code';
     
     loading(true);
     
