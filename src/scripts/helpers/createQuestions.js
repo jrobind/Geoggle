@@ -34,6 +34,7 @@ const questionCreator = ({
     replaceUnderscore 
 }) => {
     const { difficulty } = utils.getPlayerInfo();
+    const isFlag = title.includes('flag');
     
     // replace the title underscore with correct value
     title = formatTitle(title, replaceUnderscore);
@@ -52,26 +53,26 @@ const questionCreator = ({
     
     // create question title
     const questionTitle = elementCreator('h2', {innerHTML: title});
-    
-    const questionUl = elementCreator('ul');
+    // create container for answers
+    const answerContainer = isFlag ? elementCreator('div', {className: 'answer-container'}) : elementCreator('ul');
     
     // append question options
     shuffle(incorrectAnswers.concat(correctAnswer)).forEach((el) => {
         let option;
         // check whether the question relates to flags or not
-        if (!title.includes('flag')) {
+        if (!isFlag) {
             option = elementCreator('li', {innerHTML: el})
             option.addEventListener('click', addSelect);
         } else {
             option = handleFlagImg(el); 
         }
-        questionUl.appendChild(option);
+        answerContainer.appendChild(option);
     });
     
     questionDiv.appendChild(questionTitle);
     // append question count
     handleQuestionCount(questionDiv);
-    questionDiv.appendChild(questionUl);
+    questionDiv.appendChild(answerContainer);
     questionDiv.appendChild(nextQuestionBtn());
     // initially set quiz div to display: none, in case we need to wait for flag img loading
     questionDiv.classList.add('no-show');
@@ -101,16 +102,16 @@ const handleQuestionCount = (container) => {
 }
 
 const handleFlagImg = (el) => {
-    const liEl = elementCreator('li');
+    const answer = elementCreator('div', {className: 'flag-answer'});
     const imgContainer = elementCreator('div', {className: 'img-container'});
     const imgEl = elementCreator('img', {src: el});
     
     imgContainer.appendChild(imgEl);
-    liEl.appendChild(imgContainer);
+    answer.appendChild(imgContainer);
     // add handler to li containing flag img
-    liEl.addEventListener('click', addSelect);
+    imgContainer.addEventListener('click', addSelect);
     
-    return liEl;
+    return answer;
 }
 
 const nextQuestionBtn = (questionNumber) => {
