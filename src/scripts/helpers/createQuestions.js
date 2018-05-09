@@ -75,21 +75,21 @@ const questionCreator = ({
     questionDiv.appendChild(answerContainer);
     questionDiv.appendChild(nextQuestionBtn());
     // initially set quiz div to display: none, in case we need to wait for flag img loading
-    questionDiv.classList.add('no-show');
+    questionContainer.classList.add('no-show');
     questionContainer.appendChild(questionDiv);
     quiz.appendChild(questionContainer);
     // if difficulty is hard set the timer
     difficulty === 'hard' ? setTimer() : null;
     
-    // if question is for flags then load only once imgs have loaded
-    if (title.includes('flag')) {
+    // if question is for flags then load only once all imgs have loaded
+    if (isFlag) {
         loading(true);
-        imagesLoaded(document.querySelector('#question'), () => {
+        imagesLoaded(document.querySelector('.answer-container'), () => {
             loading(false);
-            questionDiv.classList.remove('no-show');
+            questionContainer.classList.remove('no-show');
         });
     } else {
-        questionDiv.classList.remove('no-show');
+        questionContainer.classList.remove('no-show');
     }
 }
 
