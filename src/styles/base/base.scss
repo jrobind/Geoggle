@@ -1,0 +1,47 @@
+// resets
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+li,
+p,
+b
+blockquote {
+  margin: 0;
+  padding: 0;
+}
+
+input,
+textarea,
+button {
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  appearance: none;
+
+  &:hover,
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
+
+// base project styles
+
+body, html, .wrapper {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    background: #DCE35B;  
+    background: -webkit-linear-gradient(to bottom, #45B649, #DCE35B);   
+    background: linear-gradient(to bottom, #45B649, #DCE35B);
+}

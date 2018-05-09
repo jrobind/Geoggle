@@ -1,0 +1,17 @@
+@import '../utils/mixins';
+
+* {
+    box-sizing: border-box;
+}
+
+.home-container, 
+.title, 
+.setup-container, 
+.setup-wrap, 
+.select-difficulty, 
+#playerSetup, 
+.quiz-container, 
+#question {
+    @include flexbox();
+    @include flex-direction(column);
+}

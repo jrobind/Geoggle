@@ -1,0 +1,55 @@
+@import '../utils/variables';
+@import '../utils/mixins';
+
+.home-container {
+    height: 100%;
+    @include justify-content(center);
+    @include align-items(center);
+}
+
+.fa-globe {
+    font-size: $large-iconFont;
+    opacity: 0.8;
+    position: absolute;
+    top: -95px;
+    z-index: -100;
+    color: $iconBlue;
+    @include mediaQuery(535px) {
+        font-size: $medium-iconFont;
+        right: 5%;
+    }
+}
+
+.title {
+    @include justify-content(center);
+    @include align-items(center);
+    position: relative;
+    z-index: 1;
+}
+
+.title {
+    h1 {
+        @include heading($large-titleFont);
+        @include mediaQuery(425px) {
+            font-size: $medium-titleFont;
+        }
+    }
+    p {
+        margin: 0 0 30px 0;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+        color: $secondaryColour;
+        font-weight: $bold;
+        font-size: $standardFont;
+        @include mediaQuery(425px) {
+            font-size: $smallFont;
+        }
+    }
+    button {
+        @include default-button(15px);
+        width: 200px;
+        @include mediaQuery(425px) {
+            @include default-button(10px);
+            width: 170px;
+        }
+    }
+}

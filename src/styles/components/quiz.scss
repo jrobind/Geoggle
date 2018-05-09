@@ -1,0 +1,65 @@
+@import '../utils/variables';
+@import '../utils/mixins';
+
+.quiz-container {
+    @include align-items(center);
+    height: 100%;
+    #question {
+        margin: 50px 5% 0 5%;
+        h2 {
+            @include heading(2.7em);
+            text-align: center;
+            @include align-self(center); /*IE11*/
+        }
+        p {
+            text-align: center;
+            color: $secondaryColour;
+            font-weight: $bold;
+            font-size: $standardFont;
+            margin: 10px 0 50px 0;
+        }
+        ul {
+            margin: 0;
+            padding: 0;
+            @include flexbox();
+            @include flex-direction(row);
+            @include flex-wrap(wrap);
+        }
+        li {
+            list-style: none;
+            text-align: center;
+            color: white;
+            padding: 10px;
+            flex-basis: 45%;
+            font-weight: $bold;
+            font-size: $answerFont;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+            background-color: $secondaryColour;
+            margin: 5px;
+            &:hover {
+                cursor: pointer;
+                opacity: 0.65;
+            }
+        }
+        button {
+            @include default-button(15px);
+            margin: 50px auto 0 auto;
+        }
+    }
+}
+
+.img-container {
+    @include flexbox();
+    @include justify-content(center);
+    width: 165px;
+    height: 135px;
+    border: 5px solid #282b34;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: auto;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+    img {
+        width: 100%;
+        max-height: 100%;
+    }
+}

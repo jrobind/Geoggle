@@ -1,0 +1,22 @@
+@import '../utils/variables';
+@import '../utils/mixins';
+
+.no-show {
+    display: none;
+}
+
+.selected {
+    font-weight: bold;
+    opacity: 0.65;
+    color: $selectedColour;
+    border-color: $selectedColour;
+}
+
+.selected-diff {
+    border: 2px solid $selectedColour;
+    border-radius: 5px;
+}
+
+#loading {
+    @include heading($largeFont);
+}

@@ -2,7 +2,7 @@ import routeHandler from './routes';
 import utils from './utils';
 import playerSetup from './helpers/player';
 import createQuestions from './helpers/createQuestions';
-import '../styles/style.scss';
+import '../styles/main.scss';
 
 const difficultyElements = [...document.querySelectorAll('#easy, #hard')];
 const { classHandler, removePlayer } = utils;

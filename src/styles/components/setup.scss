@@ -1,0 +1,44 @@
+@import '../utils/variables';
+@import '../utils/mixins';
+
+.setup-wrap {
+    margin: 50px auto 0 auto;
+    h1 {
+        @include heading($largeFont);
+        @include align-self(center);
+    }
+    #playerSetup {
+        @include align-items(center);
+        p {
+            font-weight: $bold;
+            color: $secondaryColour;
+            font-size: $standardFont;
+            text-align: center;
+        }
+        .select-difficulty div {
+            @include flexbox();
+            @include justify-content(center);
+        }
+        a {
+            margin: 20px 10px;
+            font-size: $standardFont;
+            padding: 5px;
+            color: $secondaryColour;
+            font-weight: $bold;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+        input[type='text'] {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin: auto;
+        }
+        input[type='submit'] {
+            @include default-button(10px);
+            margin: auto;
+            width: 189px;
+        }   
+    }
+}
