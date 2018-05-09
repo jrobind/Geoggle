@@ -14,6 +14,10 @@ const routeHandler = {
     },
     showQuiz() {
         handleClass('quiz');
+        // setup an alert warining for users closing window during game
+        window.onbeforeunload = function() {
+            return 'Your current game data will be lost! Are you sure you want to leave?';   
+        }
     },
     showScore() {
         handleClass('score');
