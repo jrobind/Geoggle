@@ -33,7 +33,7 @@
             padding: 10px;
             border: none;
             border-radius: 5px;
-            margin: auto;
+            width: 100%;
         }
         input[type='submit'] {
             @include default-button(10px);

@@ -8,9 +8,9 @@
 .title, 
 .setup-container, 
 .setup-wrap, 
-.select-difficulty, 
-#playerSetup, 
-.quiz-container, 
+.select-difficulty,
+.quiz-container,
+#playerSetup,  
 #question {
     @include flexbox();
     @include flex-direction(column);

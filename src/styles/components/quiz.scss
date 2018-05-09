@@ -4,51 +4,63 @@
 .quiz-container {
     @include align-items(center);
     height: 100%;
-    #question {
-        margin: 50px 5% 0 5%;
-        h2 {
-            @include heading(2.7em);
-            text-align: center;
-            @include align-self(center); /*IE11*/
-        }
-        p {
-            text-align: center;
-            color: $secondaryColour;
-            font-weight: $bold;
-            font-size: $standardFont;
-            margin: 10px 0 50px 0;
-        }
-        ul, .answer-container {
-            @include flexbox();
-            @include flex-direction(row);
-            @include flex-wrap(wrap);
-        }
-        li, .flag-answer {
-            @include flex-basis(45%);
-            &:hover {
-                cursor: pointer;
-                opacity: 0.65;
-            }
-        }
-        li {
-            list-style: none;
-            text-align: center;
-            color: white;
-            padding: 10px;
-            font-weight: $bold;
-            font-size: $answerFont;
-            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
-            background-color: $secondaryColour;
-            margin: 5px;
-        }
-        .flag-answer {
-            margin: 8px;
-        }
-        button {
-            @include default-button(15px);
-            margin: 50px auto 0 auto;
+    #questionContainer {
+        width: 100%; /*IE11*/
+    }
+}
+
+// question 
+
+#question {
+    margin: 50px 5% 0 5%;
+    h2 {
+        @include heading(2.7em);
+        text-align: center;
+        @include align-self(center); /*IE11*/
+        width: 100%; /*IE11*/
+    }
+    p {
+        text-align: center;
+        color: $secondaryColour;
+        font-weight: $bold;
+        font-size: $standardFont;
+        margin: 10px 0 50px 0;
+    }
+    ul, .answer-container {
+        @include flexbox();
+        @include flex-direction(row);
+        @include flex-wrap(wrap);
+    }
+    .answer, .flag-answer {
+        @include flex-basis(45%);
+        &:hover {
+            cursor: pointer;
+            opacity: 0.65;
         }
     }
+    .flag-answer {
+        margin: 8px;
+    }
+    button {
+        @include default-button(15px);
+        @include align-self(center);
+        margin: 50px auto 0 auto;
+    }
+}
+
+// answers
+
+.answer {
+    list-style: none;
+    text-align: center;
+    color: white;
+    padding: 10px;
+    font-weight: $bold;
+    font-size: $answerFont;
+    border: 5px solid $secondaryColour;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    background-color: $secondaryColour;
+    margin: 5px;
 }
 
 .img-container {

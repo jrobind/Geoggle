@@ -7,6 +7,8 @@
     @include align-items(center);
 }
 
+// globe icon
+
 .fa-globe {
     font-size: $large-iconFont;
     opacity: 0.8;
@@ -20,14 +22,13 @@
     }
 }
 
+// title
+
 .title {
     @include justify-content(center);
     @include align-items(center);
     position: relative;
     z-index: 1;
-}
-
-.title {
     h1 {
         @include heading($large-titleFont);
         @include mediaQuery(425px) {
