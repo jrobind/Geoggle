@@ -3,6 +3,7 @@
 
 .home-container {
     min-height: 100vh;
+    height: 100vh; /*IE11*/
     @include justify-content(center);
     @include align-items(center);
 }
@@ -16,7 +17,7 @@
     top: -95px;
     z-index: -100;
     color: $iconBlue;
-    @include mediaQuery(535px) {
+    @include mediaQuery($medium) {
         font-size: $medium-iconFont;
         top: -50px;
         right: -30px;
@@ -35,7 +36,7 @@
     z-index: 1;
     h1 {
         @include heading($large-titleFont);
-        @include mediaQuery(425px) {
+        @include mediaQuery($small) {
             font-size: $medium-titleFont;
         }
     }
@@ -45,14 +46,18 @@
         color: $secondaryColour;
         font-weight: $bold;
         font-size: $standardFont;
-        @include mediaQuery(425px) {
+        @include mediaQuery($small) {
             font-size: $smallFont;
         }
     }
     button {
-        @include default-button(15px);
         width: 200px;
-        @include mediaQuery(425px) {
+        @include default-button(15px);
+        @include hoverSupported() {
+            background-color: transparent;
+            transition: 0.4s;
+        }
+        @include mediaQuery($small) {
             @include default-button(10px);
             width: 170px;
         }

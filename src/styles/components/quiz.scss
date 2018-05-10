@@ -14,13 +14,16 @@
 
 #question {
     margin: 25px 0 0 0;
+    @include mediaQuery($small) {
+        margin-top: 0;
+    }
     h2 {
         @include heading($large-quizFont);
         padding: 0 10px;
         text-align: center;
         @include align-self(center); /*IE11*/
         width: 100%; /*IE11*/
-        @include mediaQuery(425px) {
+        @include mediaQuery($small) {
             font-size: $mediumFont;
         }
     }
@@ -34,7 +37,8 @@
         margin: auto;
     }
     .answer, .flag-answer {
-        &:hover {
+        cursor: pointer;
+        @include hoverSupported() {
             cursor: pointer;
             opacity: 0.65;
         }
@@ -42,14 +46,21 @@
     .flag-answer {
         @include flex(1 0 47%);
         margin: 8px;
-        @include mediaQuery(615px) {
+        @include mediaQuery($large) {
             @include flex(1 1 40%);   
+        }
+        @include mediaQuery($small) {
+            @include flex(1 1 auto); /*IE11*/
         }
     }
     button {
+        margin: 50px auto 0 auto;
         @include default-button(15px);
         @include align-self(center);
-        margin: 50px auto 0 auto;
+        @include hoverSupported() {
+            background-color: transparent;
+            transition: 0.4s;
+        }
     }
 }
 
@@ -84,7 +95,7 @@
     background-color: $secondaryColour;
     margin: 8px;
     min-width: 260px;
-    @include mediaQuery(425px) {
+    @include mediaQuery($small) {
         font-size: $standardFont;
         min-width: 230px;
     }
@@ -99,11 +110,11 @@
     overflow: hidden;
     margin: auto;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
-    @include mediaQuery(615px) {
+    @include mediaQuery($large) {
         width: 155px;
         height: 105px;
     }
-    @include mediaQuery(425px) {
+    @include mediaQuery($small) {
         width: 135px;
         height: 95px;
     }

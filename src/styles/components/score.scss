@@ -2,12 +2,18 @@
 @import '../utils/mixins';
 
 .score-container {
+    padding: 25px;
     @include flexbox();
     @include flex-direction(column);
     @include align-items(center);
     h2 {
         @include heading($largeFont);
-        margin-top: 50px;
+        margin-top: 25px;
+        text-align: center;
+        @include mediaQuery($small) {
+            font-size: $mediumFont;
+            margin-top: 0;
+        }
     }
     p, #scoreLevel {
         font-size: $mediumFont;
@@ -21,11 +27,17 @@
         i {
             font-size: $largeFont;
             color: $secondaryColour;
+            @include mediaQuery($small) {
+                font-size: $mediumFont;
+            }
         }
         span {
             color: $mainTextColour;
             font-weight: $bold;  
             font-size: $standardFont;
+            @include mediaQuery($small) {
+                font-size: $smallFont;
+            }
         }
     }
     .finish-options {
@@ -35,6 +47,14 @@
             @include default-button(10px);
             margin: 20px 10px 0 10px;
             width: 145px;
+            @include hoverSupported() {
+                background-color: transparent;
+                transition: 0.4s;
+            }
+            @include mediaQuery($small) {
+                width: 135px;
+                margin: 20px 6px 0 6px;
+            }
         }
     }
 }

@@ -7,12 +7,15 @@
 
 .setup-wrap {
     margin: 25px auto 0 auto;
+    @include mediaQuery($small) {
+        margin-top: 0;
+    }
     h1 {
         text-align: center;
         padding: 0 15px;
         @include heading($largeFont);
         @include align-self(center);
-        @include mediaQuery(425px) {
+        @include mediaQuery($small) {
             font-size: $mediumFont;
         }
     }
@@ -55,6 +58,10 @@
             @include default-button(10px);
             margin: auto;
             width: 189px;
+            @include hoverSupported() {
+                background-color: transparent;
+                transition: 0.4s;
+            }
         }   
     }
 }

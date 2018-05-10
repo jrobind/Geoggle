@@ -15,7 +15,7 @@
 // difficulty selected
 
 .selected-diff {
-    border: 2px solid $selectedColour;
+    border: 2px solid $iconBlue;
     border-radius: 5px;
 }
 
@@ -31,7 +31,8 @@
     @include heading($large-quizFont);
     margin-top: 25px;
     text-align: center;
-    @include mediaQuery(425px) {
+    @include mediaQuery($small) {
         font-size: $mediumFont;
+        margin-top: 0;
     }
 }
