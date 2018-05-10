@@ -20,7 +20,7 @@ export const handleScoreUi = () => {
     // set h2 player name text
     scoreEl[0].innerHTML = `${name}, you scored...`;
     scoreEl[1].innerHTML = `${score}/${scoreTotal}`;
-    
+
     // set score level
     if (scorePercentage < 40) {
         
@@ -49,13 +49,15 @@ export const handleScoreUi = () => {
 }
 
 export const resetScoreUi = () => {
-    const icon = document.querySelector('#scoreLevel span i');
+    const icon = document.querySelector('#scoreLevel i');
+    const iconText = document.querySelector('#scoreLevel span');
 
     if (scoreLevelDiv.firstChild) {
         scoreEl[0].innerHTML = '';
         scoreEl[1].innerHTML = '';
-        // remove icon
-        icon.parentElement.removeChild(icon);   
+        // remove icon and icon text
+        icon.parentElement.removeChild(icon);
+        iconText.parentElement.removeChild(iconText);   
     }
 }
 

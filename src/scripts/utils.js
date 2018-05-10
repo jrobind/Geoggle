@@ -34,7 +34,7 @@ export default {
             // grab country code
             const code = country.alpha2Code.toLowerCase();
             // replace current link with call to flag png
-             arr[index].flag = `http://flagpedia.net/data/flags/normal/${code}.png`; 
+             arr[index].flag = `https://flagpedia.net/data/flags/normal/${code}.png`; 
         });
         
         return array;        

@@ -4,7 +4,7 @@ let intervalId;
 
 export default {
     setTimer() {
-        const time = document.querySelector('#timer');
+        const time = document.querySelector('.timer');
         
         let counter = 10;
         // set initial starting time

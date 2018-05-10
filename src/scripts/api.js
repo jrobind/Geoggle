@@ -32,7 +32,7 @@ export const fetchQuestions = () => {
             const formattedCountries = difficulty === 'hard' ? formatFlagLink(formatPopulation(countryFilter(data))) : formatFlagLink(countryFilter(data));
         console.log(formattedCountries)
             // create formatted questions from countries array and shuffle
-            const finalFormat = formatQuestion(shuffle(formattedCountries, difficulty));
+            const finalFormat = formatQuestion(shuffle(formattedCountries), difficulty);
             loading({loadingState: false});
             return finalFormat;
         });

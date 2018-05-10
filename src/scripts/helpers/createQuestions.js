@@ -46,7 +46,7 @@ const questionCreator = ({
     // determine whether we need a timer for hard difficulty
     if (difficulty === 'hard') {
         const timerDiv = elementCreator('div', {id: 'timerContainer'});
-        const pEl = elementCreator('p', {id: 'timer'});
+        const pEl = elementCreator('p', {className: 'timer'});
         timerDiv.appendChild(pEl);
         questionDiv.appendChild(timerDiv);
     }
@@ -97,7 +97,12 @@ const questionCreator = ({
 
 const handleQuestionCount = (container) => {
     const currentCount = count + 1;
-    const counterDiv = elementCreator('p', {innerHTML: `Question ${currentCount}/15`});
+    
+    const counterDiv = elementCreator('p', {
+        innerHTML: `Question ${currentCount}/15`,
+        className: 'question-count'
+    });
+
     container.appendChild(counterDiv);
 }
 
