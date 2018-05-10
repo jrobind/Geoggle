@@ -96,3 +96,9 @@
         @content;
     }
 }
+
+@mixin mediaLandscape($pixels) {
+    @media screen and (max-width: $pixels) and (orientation: landscape) {
+        @content;
+    }
+}

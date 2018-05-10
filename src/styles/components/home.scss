@@ -2,7 +2,7 @@
 @import '../utils/mixins';
 
 .home-container {
-    height: 100%;
+    min-height: 100vh;
     @include justify-content(center);
     @include align-items(center);
 }
@@ -18,7 +18,11 @@
     color: $iconBlue;
     @include mediaQuery(535px) {
         font-size: $medium-iconFont;
-        right: 5%;
+        top: -50px;
+        right: -30px;
+    }
+    @include mediaLandscape(767px) {
+        top: -40px;
     }
 }
 

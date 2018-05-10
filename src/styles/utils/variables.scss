@@ -17,8 +17,14 @@ $large-iconFont: 15em;
 $medium-iconFont: 13em;
 $large-titleFont: 5.3em;
 $medium-titleFont: 3.7em;
+$large-quizFont: 2.7em;
 $largeFont: 3em;
 $mediumFont: 2em;
-$standardFont: 1.25em;
+$standardFont: 1.2em;
 $smallFont: 0.9em;
 $answerFont: 1.4em;
+
+// media queries
+$large: 615px;
+$medium: 535px;
+$small: 425px;

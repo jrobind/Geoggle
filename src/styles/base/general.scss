@@ -28,6 +28,10 @@
 // loading
 
 #loading {
-    @include heading($largeFont);
-    margin-top: 50px;
+    @include heading($large-quizFont);
+    margin-top: 25px;
+    text-align: center;
+    @include mediaQuery(425px) {
+        font-size: $mediumFont;
+    }
 }

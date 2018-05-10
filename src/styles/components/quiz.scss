@@ -3,6 +3,7 @@
 
 .quiz-container {
     @include align-items(center);
+    padding: 25px;
     height: 100%;
     #questionContainer {
         width: 100%; /*IE11*/
@@ -12,12 +13,16 @@
 // question 
 
 #question {
-    margin: 50px 5% 0 5%;
+    margin: 25px 0 0 0;
     h2 {
-        @include heading(2.7em);
+        @include heading($large-quizFont);
+        padding: 0 10px;
         text-align: center;
         @include align-self(center); /*IE11*/
         width: 100%; /*IE11*/
+        @include mediaQuery(425px) {
+            font-size: $mediumFont;
+        }
     }
     ul, .answer-container {
         @include flexbox();
@@ -37,6 +42,9 @@
     .flag-answer {
         @include flex(1 0 47%);
         margin: 8px;
+        @include mediaQuery(615px) {
+            @include flex(1 1 40%);   
+        }
     }
     button {
         @include default-button(15px);
@@ -45,9 +53,9 @@
     }
 }
 
-// timer
+// timer and question count
 
-#timer, #questionContainer p {
+.timer, .question-count {
     text-align: center;
     color: $secondaryColour;
     font-weight: $bold;
@@ -76,6 +84,10 @@
     background-color: $secondaryColour;
     margin: 8px;
     min-width: 260px;
+    @include mediaQuery(425px) {
+        font-size: $standardFont;
+        min-width: 230px;
+    }
 }
 
 .img-container {
@@ -87,6 +99,14 @@
     overflow: hidden;
     margin: auto;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+    @include mediaQuery(615px) {
+        width: 155px;
+        height: 105px;
+    }
+    @include mediaQuery(425px) {
+        width: 135px;
+        height: 95px;
+    }
     img {
         width: 100%;
         max-height: 100%;

@@ -33,14 +33,15 @@ button {
 
 // base project styles
 
-body, html, .wrapper {
-    height: 100%;
-    width: 100%;
-}
-
-body {
+html {
     font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
     background: #DCE35B;  
     background: -webkit-linear-gradient(to bottom, #45B649, #DCE35B);   
     background: linear-gradient(to bottom, #45B649, #DCE35B);
+    
+}
+
+.wrapper {
+    min-height: 100vh;
+    width: 100%;
 }
