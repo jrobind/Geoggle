@@ -28,13 +28,13 @@ export const handleScoreUi = () => {
             className: ['fa', 'fa-leaf']
         }), ' GeoNovice');
         
-    } else if (scorePercentage > 40 && scorePercentage < 60) {
+    } else if (scorePercentage >= 40 && scorePercentage <= 60) {
         
         createIcon(elementCreator('i', {
             className: ['fa', 'fa-bolt']
         }), ' GeoPhenom');
         
-    } else if (scorePercentage > 60 && scorePercentage < 85 ) {
+    } else if (scorePercentage > 60 && scorePercentage <= 85 ) {
         
         createIcon(elementCreator('i', {
             className: ['fa', 'fa-rocket']
