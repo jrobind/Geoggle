@@ -13,11 +13,7 @@ module.exports = {
             {test: /\.(js)$/, use: 'babel-loader', exclude: /node_modules/},
             {test: /\.scss$/, use: ExtractTextPlugin.extract({
                 use: ['css-loader', 'sass-loader']
-            })},
-            {test: /\.(png|jpg)$/, loader: 'file-loader', options: {
-                name:'/images/[name]_[hash:7].[ext]'
-            }},
-            {test: /\.html$/, loader: 'html-loader'}
+            })}
         ]
     },
     devtool: 'source-map',
