@@ -16,9 +16,9 @@ export default (countries, difficulty = 'easy') => {
     // remove population and subregion questions for easy difficulty
     if (difficulty === 'easy') {
         questionTitles = [
-            ...utils.duplicator(drafts[0], 15), 
-//            ...utils.duplicator(drafts[1], 5),
-//            ...utils.duplicator(drafts[2], 5),
+            ...utils.duplicator(drafts[0], 5), 
+            ...utils.duplicator(drafts[1], 5),
+            ...utils.duplicator(drafts[2], 5),
         ];
     } else {
         questionTitles = [
