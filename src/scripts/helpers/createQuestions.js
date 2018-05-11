@@ -1,9 +1,10 @@
 import { fetchQuestions } from '../api';
 import routeHandler from '../routes';
+import checkAnswer from './checkAnswer';
 import utils from '../utils';
 import timer from './timer';
 import loading from './loading';
-import { updateScore, handleScoreUi, resetScoreUi } from './score';
+import { handleScoreUi, resetScoreUi } from './score';
 const quiz = document.querySelector('#quiz');
 const imagesLoaded = require('imagesloaded');
 
@@ -21,6 +22,7 @@ export default () => {
             count = 0;
             elementRemover('#finish');
             // set the current question data
+            console.log(data);
             questions = data;
             // create the ui for the question
             questionCreator(data[count])
@@ -54,15 +56,15 @@ const questionCreator = ({
     // create question title
     const questionTitle = elementCreator('h2', {innerHTML: title});
     // create container for answers
-    const answerContainer = isFlag ? elementCreator('div', {className: 'answer-container'}) : elementCreator('ul');
+    const answerContainer = elementCreator('div', isFlag ? {className: 'flag-answer-container'} : {className: 'answer-container'});
     
     // append question options
     shuffle(incorrectAnswers.concat(correctAnswer)).forEach((el) => {
         let option;
         // check whether the question relates to flags or not
         if (!isFlag) {
-            option = elementCreator('li', {innerHTML: el, className: 'answer'});
-            option.addEventListener('click', addSelect);
+            option = elementCreator('div', {innerHTML: el, className: 'answer'});
+            option.addEventListener('click', handleCheckAnswer);
         } else {
             option = handleFlagImg(el); 
         }
@@ -73,18 +75,18 @@ const questionCreator = ({
     // append question count
     handleQuestionCount(questionDiv);
     questionDiv.appendChild(answerContainer);
-    questionDiv.appendChild(nextQuestionBtn());
+    
     // initially set quiz div to display: none, in case we need to wait for flag img loading
     questionContainer.classList.add('no-show');
     questionContainer.appendChild(questionDiv);
     quiz.appendChild(questionContainer);
     // if difficulty is hard set the timer
-    difficulty === 'hard' ? setTimer() : null;
+    difficulty === 'hard' ? setTimer(questions[count]) : null;
     
     // if question is for flags then load only once all imgs have loaded
     if (isFlag) {
         loading({loadingState: true, text: 'LOADING QUESTION...'});
-        imagesLoaded(document.querySelector('.answer-container'), () => {
+        imagesLoaded(document.querySelector('.flag-answer-container'), () => {
             loading({loadingState: false});
             questionContainer.classList.remove('no-show');
         });
@@ -113,21 +115,14 @@ const handleFlagImg = (el) => {
     
     imgContainer.appendChild(imgEl);
     answer.appendChild(imgContainer);
-    // add handler to li containing flag img
-    imgContainer.addEventListener('click', addSelect);
+    // add handler to flag img container
+    imgContainer.addEventListener('click', handleCheckAnswer);
     
     return answer;
 }
 
-const nextQuestionBtn = (questionNumber) => {
-    const nextBtn = elementCreator('button', {id: 'next', innerHTML: 'Next Question'});
-    // setup increment handler for next question
-    nextBtn.addEventListener('click', incrementHandler);
-    return nextBtn;
-}
-
-const removeListeners = () => {
-    [...document.querySelectorAll('li')].forEach((el) => el.removeEventListener('click', addSelect));
+export const removeListeners = () => {
+    [...document.querySelectorAll('.img-container, .answer-container .answer')].forEach((el) => el.removeEventListener('click', handleCheckAnswer));
 }
 
 const finish = () => {
@@ -138,7 +133,27 @@ const finish = () => {
     handleScoreUi();
 }
 
-const increment = () => {
+// handlers
+
+export const handleCheckAnswer = ({ target }) => {
+    const { difficulty } = utils.getPlayerInfo();
+    const isFlag = target.nodeName === 'IMG' ? true : false;
+    
+    if (difficulty === 'hard') {
+        resetTimer();
+    }
+    
+    // process answer ui
+    checkAnswer(questions[count], {
+        isFlag, 
+        answer: isFlag ? target.src : target.innerHTML,
+        answerEl: isFlag ? target.parentElement : target
+    });
+    
+    removeListeners();
+}
+
+export const incrementHandler = () => {
     const { difficulty } = utils.getPlayerInfo();
     
     if (count !== 14) {
@@ -151,42 +166,4 @@ const increment = () => {
         difficulty === 'hard' ? resetTimer() : null;
         finish();
     }    
-}
-
-// handlers
-
-const addSelect = ({ target }) => {
-    const isFlag = target.nodeName === 'IMG' ? true : false;
-    
-    // add selected style
-    classHandler(isFlag ? target.parentElement : target, {
-        className: 'selected', 
-        allElements: isFlag ? [...document.querySelectorAll('.img-container')] : [...document.querySelectorAll('#question li')]
-    });
-}
-
-const incrementHandler = ({ target }) => {
-    const { difficulty } = utils.getPlayerInfo();
-    const { correctAnswer, points, title } = questions[count];
-    const nodeNum = difficulty === 'hard' ? 3 : 2;
-    const isFlag = target.parentElement.childNodes[nodeNum].childNodes[0].firstElementChild ? true : false;
-    const selector = isFlag ? '.img-container' : '#question li';
-    const checkedAnswers = [...document.querySelectorAll(selector)].filter((el) => el.classList.contains('selected'));
-    
-    // if user tries to progress to next question but has not selected an answer, then alert them
-    if (!checkedAnswers.length) {
-        alert('Please select an answer');
-    } else  {
-        // process score 
-        if (title.includes('flag')) {
-            checkedAnswers[0].firstChild.src === correctAnswer ? updateScore(points) : null;   
-        } else {
-            checkedAnswers[0].innerHTML === correctAnswer ? updateScore(points) : null;
-        }
-        
-        removeListeners();
-        increment();
-    }
 };
-
-export const forceNextQuestion = () => increment();

@@ -7,7 +7,12 @@
 
 // answer selected
 
-.selected {
+.selected-correct {
+    opacity: 0.65;
+    border-color: green;
+}
+
+.selected-incorrect {
     opacity: 0.65;
     border-color: $selectedColour;
 }
