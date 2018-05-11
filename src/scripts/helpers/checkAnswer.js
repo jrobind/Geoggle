@@ -4,14 +4,14 @@ import { incrementHandler, removeListeners } from './createQuestions';
 
 const { elementCreator } = utils;
 
-export default ({ correctAnswer, points, title }, answerData) => {
+export default ({ correctAnswer, title }, answerData) => {
     // build answer ui feedback
     if (answerData) {
         const { isFlag, answer, answerEl } = answerData;
         const questionDiv = document.querySelector('#question');
         
         if (answer === correctAnswer) {
-            updateScore(points);
+            updateScore();
             // add correct class to answer element
             answerEl.classList.add('selected-correct');
             // append the next question btn

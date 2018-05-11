@@ -46,8 +46,7 @@ export default (countries, difficulty = 'easy') => {
                     title,
                     replaceUnderscore: name, 
                     incorrectAnswers: incorrect(countries, 'flag'),
-                    correctAnswer: flag,
-                    points: 2
+                    correctAnswer: flag
                 }
                 
                 questionsArr.splice(0, 1);
@@ -58,8 +57,7 @@ export default (countries, difficulty = 'easy') => {
                     title,
                     replaceUnderscore: name, 
                     incorrectAnswers: incorrectRegion(region),
-                    correctAnswer: region,
-                    points: 1
+                    correctAnswer: region
                 }
                 
                 questionsArr.splice(0, 1);
@@ -70,8 +68,7 @@ export default (countries, difficulty = 'easy') => {
                     title,
                     replaceUnderscore: capital, 
                     incorrectAnswers: incorrect(countries, 'name'),
-                    correctAnswer: name,
-                    points: 2
+                    correctAnswer: name
                 }
                 
                 questionsArr.splice(0, 1);
@@ -82,8 +79,7 @@ export default (countries, difficulty = 'easy') => {
                     title,
                     replaceUnderscore: name, 
                     incorrectAnswers: incorrectSubregion(subregion),
-                    correctAnswer: subregion,
-                    points: 2
+                    correctAnswer: subregion
                 }
                 
                 questionsArr.splice(0, 1);
@@ -94,8 +90,7 @@ export default (countries, difficulty = 'easy') => {
                     title,
                     replaceUnderscore: name, 
                     incorrectAnswers: incorrect(countries, 'population'),
-                    correctAnswer: population,
-                    points: 3
+                    correctAnswer: population
                 }
                 
                 questionsArr.splice(0, 1);

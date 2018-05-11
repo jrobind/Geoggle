@@ -9,12 +9,12 @@
 
 .selected-correct {
     opacity: 0.65;
-    border-color: green;
+    border-color: $correctColour;
 }
 
 .selected-incorrect {
     opacity: 0.65;
-    border-color: $selectedColour;
+    border-color: $incorrectColour;
 }
 
 // difficulty selected
@@ -27,7 +27,7 @@
 // timer warning
 
 .warning {
-    color: $selectedColour;
+    color: $incorrectColour;
 }
 
 // loading
