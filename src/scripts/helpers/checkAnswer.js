@@ -40,19 +40,19 @@ const handleFlash = (isFlag, correctAnswer) => {
 
         if (elAnswer === correctAnswer) {
             intervalId = setInterval(() => {
-                if (flashCount === 6) {
+                if (flashCount === 7) {
                     questionDiv.appendChild(nextQuestionBtn());
                     clearInterval(intervalId);
-                }
-                // create flash effect
-                if (elForCorrectClass.classList.contains('selected-correct')) {
-                    elForCorrectClass.classList.remove('selected-correct');
                 } else {
-                    elForCorrectClass.classList.add('selected-correct');   
+                    // create flash effect
+                    if (elForCorrectClass.classList.contains('selected-correct')) {
+                        elForCorrectClass.classList.remove('selected-correct');
+                    } else {
+                        elForCorrectClass.classList.add('selected-correct');   
+                    }
+
+                    flashCount++;   
                 }
-
-                flashCount++;
-
             }, 400);
         }
     });
