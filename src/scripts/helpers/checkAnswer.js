@@ -1,6 +1,6 @@
 import { updateScore } from './score';
 import utils from '../utils';
-import { incrementHandler, removeListeners } from './createQuestions';
+import { incrementHandler, removeListeners, count } from './createQuestions';
 
 const { elementCreator } = utils;
 
@@ -9,7 +9,7 @@ export default ({ correctAnswer, title }, answerData) => {
     if (answerData) {
         const { isFlag, answer, answerEl } = answerData;
         const questionDiv = document.querySelector('#question');
-        
+
         if (answer === correctAnswer) {
             updateScore();
             // add correct class to answer element
@@ -59,7 +59,7 @@ const handleFlash = (isFlag, correctAnswer) => {
 }
 
 const nextQuestionBtn = (questionNumber) => {
-    const nextBtn = elementCreator('button', {id: 'next', innerHTML: 'Next Question'});
+    const nextBtn = elementCreator('button', {id: 'next', innerHTML: count === 14 ? 'See Score' : 'Next Question'});
     // setup increment handler for next question
     nextBtn.addEventListener('click', incrementHandler);
     return nextBtn;

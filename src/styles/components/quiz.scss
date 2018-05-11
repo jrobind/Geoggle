@@ -36,7 +36,7 @@
         width: 100%; /*IE11*/
         margin: auto;
     }
-    .answer, .flag-answer {
+    .answer, .img-container {
         cursor: pointer;
         @include hoverSupported() {
             cursor: pointer;

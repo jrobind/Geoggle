@@ -12,7 +12,7 @@ const { shuffle, elementCreator, formatTitle, elementRemover, classHandler } = u
 const { setTimer, resetTimer } = timer;
 const { showScore } = routeHandler;
 
-let count = 0;
+export let count = 0;
 let questions;
 
 export default () => {
@@ -22,7 +22,6 @@ export default () => {
             count = 0;
             elementRemover('#finish');
             // set the current question data
-            console.log(data);
             questions = data;
             // create the ui for the question
             questionCreator(data[count])
@@ -113,10 +112,10 @@ const handleFlagImg = (el) => {
     const imgContainer = elementCreator('div', {className: 'img-container'});
     const imgEl = elementCreator('img', {src: el});
     
-    imgContainer.appendChild(imgEl);
-    answer.appendChild(imgContainer);
     // add handler to flag img container
     imgContainer.addEventListener('click', handleCheckAnswer);
+    imgContainer.appendChild(imgEl);
+    answer.appendChild(imgContainer);
     
     return answer;
 }
@@ -137,7 +136,10 @@ const finish = () => {
 
 export const handleCheckAnswer = ({ target }) => {
     const { difficulty } = utils.getPlayerInfo();
-    const isFlag = target.nodeName === 'IMG' ? true : false;
+    const { title } = questions[count];
+    const isFlag = title.includes('flag');
+    const flagAnswer = target.nodeName === 'IMG' ? target.src : target.firstChild.src;
+    const flagAnswerEl = target.nodeName === 'IMG' ? target.parentElement : target;
     
     if (difficulty === 'hard') {
         resetTimer();
@@ -146,8 +148,8 @@ export const handleCheckAnswer = ({ target }) => {
     // process answer ui
     checkAnswer(questions[count], {
         isFlag, 
-        answer: isFlag ? target.src : target.innerHTML,
-        answerEl: isFlag ? target.parentElement : target
+        answer: isFlag ? flagAnswer : target.innerHTML,
+        answerEl: isFlag ? flagAnswerEl : target
     });
     
     removeListeners();
