@@ -79,17 +79,19 @@ const questionCreator = ({
     questionContainer.classList.add('no-show');
     questionContainer.appendChild(questionDiv);
     quiz.appendChild(questionContainer);
-    // if difficulty is hard set the timer
-    difficulty === 'hard' ? setTimer(questions[count]) : null;
     
     // if question is for flags then load only once all imgs have loaded
     if (isFlag) {
         loading({loadingState: true, text: 'LOADING QUESTION...'});
         imagesLoaded(document.querySelector('.flag-answer-container'), () => {
+            // remove loading state
             loading({loadingState: false});
             questionContainer.classList.remove('no-show');
+            // if difficulty is hard set the timer
+            difficulty === 'hard' && setTimer(questions[count]);
         });
     } else {
+        difficulty === 'hard' && setTimer(questions[count]);
         questionContainer.classList.remove('no-show');
     }
 }
