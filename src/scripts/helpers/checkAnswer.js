@@ -16,6 +16,8 @@ export default ({ correctAnswer, title }, answerData) => {
             answerEl.classList.add('selected-correct');
             // append the next question btn
             questionDiv.appendChild(nextQuestionBtn());
+            // scroll to button, else this will be lost on small screen sizes
+            document.querySelector('#next').scrollIntoView({ block: 'start',  behavior: 'smooth' });
         } else {
             // add incorrect class to answer element
             answerEl.classList.add('selected-incorrect');
