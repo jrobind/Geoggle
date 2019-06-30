@@ -44,6 +44,7 @@ const handleFlash = (isFlag, correctAnswer) => {
             intervalId = setInterval(() => {
                 if (flashCount === 7) {
                     questionDiv.appendChild(nextQuestionBtn());
+                    document.querySelector('#next').scrollIntoView({ block: 'start',  behavior: 'smooth' });
                     clearInterval(intervalId);
                 } else {
                     // create flash effect
