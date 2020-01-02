@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>Geoggle</title>
+        <link rel="icon" href="./favicon-globe.ico">
+        <script src="https://use.fontawesome.com/d11a192d4b.js"></script>
+    <link href="styles.css" rel="stylesheet"></head>
+    <body>
+        <div class="wrapper">
+            <!--title/home-->
+            <div id="home" class="home-container">
+                <div class="title">
+                    <h1>
+                        Geoggle
+                    </h1>
+                    <p>The Countries Of The World Quiz</p>
+                    <button id="start">Play</button>
+                    <p><i class="fa fa-globe" aria-hidden="true"></i></p>
+                </div>
+            </div>
+            <!--setup-->
+            <div id="setup" class="setup-container no-show">
+                <div class="setup-wrap">
+                    <h1>Before you begin...</h1>
+                    <form id="playerSetup">
+                        <div class="playername-container">
+                            <p>Set a quiz nickname</p>
+                            <input id="playerName" type="text">
+                        </div>
+                        <p>Select difficulty</p>
+                        <div class="select-difficulty">
+                            <div>
+                                <a id="easy" class="selected-diff">Easy</a>
+                                <a id="hard">Hard</a>
+                            </div>
+                            <input type="submit" value="submit">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--quiz-->
+            <div id="quiz" class="quiz-container no-show">
+                <h2 id="loading"></h2>
+            </div>
+            <!--score/results-->
+            <div id="score" class="score-container no-show">
+                <h2></h2>
+                <p id="playerScore"></p>
+                <div id="scoreLevel"></div>
+                <div class="finish-options">
+                    <a id='playAgain'>Play again?</a>
+                    <a id='goHome'>Finish</a>
+                </div>
+            </div>
+        </div>
+    <script type="text/javascript" src="bundle.js"></script></body>
+</html>

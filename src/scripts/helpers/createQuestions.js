@@ -94,6 +94,8 @@ const questionCreator = ({
         difficulty === 'hard' && setTimer(questions[count]);
         questionContainer.classList.remove('no-show');
     }
+    // by default, scroll to page top
+    document.querySelector('#quiz').scrollIntoView({ block: 'start',  behavior: 'smooth' });
 }
 
 // helpers
