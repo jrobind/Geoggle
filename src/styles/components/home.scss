@@ -10,20 +10,17 @@
 
 // globe icon
 
-.fa-globe {
-    font-size: $large-iconFont;
+.globe-icon {
+    width: 250px;
     opacity: 0.8;
     position: absolute;
-    top: -95px;
+    top: -65px;
+    right: -80px;
     z-index: -100;
-    color: $iconBlue;
     @include mediaQuery($medium) {
-        font-size: $medium-iconFont;
-        top: -50px;
-        right: -30px;
-    }
-    @include mediaLandscape(767px) {
-        top: -40px;
+        width: 190px;
+        top: -55px;
+        right: -50px;
     }
 }
 
@@ -36,7 +33,7 @@
     z-index: 1;
     h1 {
         @include heading($large-titleFont);
-        @include mediaQuery($small) {
+        @include mediaQuery($medium) {
             font-size: $medium-titleFont;
         }
     }
@@ -46,7 +43,7 @@
         color: $secondaryColour;
         font-weight: $bold;
         font-size: $standardFont;
-        @include mediaQuery($small) {
+        @include mediaQuery($medium) {
             font-size: $smallFont;
         }
     }
@@ -57,7 +54,7 @@
             background-color: transparent;
             transition: 0.4s;
         }
-        @include mediaQuery($small) {
+        @include mediaQuery($medium) {
             @include default-button(10px);
             width: 170px;
         }
