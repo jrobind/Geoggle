@@ -5,6 +5,7 @@ import createQuestions from './helpers/createQuestions';
 import '../styles/main.scss';
 
 const difficultyElements = [...document.querySelectorAll('#easy, #hard')];
+const playerNameEl = document.querySelector('#playerName');
 const { classHandler, removePlayer } = utils;
 const { showHome, showSetup, showQuiz } = routeHandler;
 
@@ -24,7 +25,7 @@ difficultyElements.forEach((button) => {
 });
 
 document.querySelector('#playerSetup').addEventListener('submit', (e) => {
-    const playerName = document.querySelector('#playerName').value;
+    const playerName = playerNameEl.value;
     const difficulty = difficultyElements.filter((el) => el.classList.contains('selected-diff'))[0].id;
     const nameInput = document.querySelector('.playername-container');
     // prevent form refresh
@@ -33,6 +34,7 @@ document.querySelector('#playerSetup').addEventListener('submit', (e) => {
     if (!playerName && !nameInput.classList.contains('no-show')) {
         alert('Please set a nickname');
         document.querySelector('#playerSetup').reset();
+        playerNameEl.focus();
     } else {
         // setup player
         !nameInput.classList.contains('no-show') ? playerSetup({playerName, difficulty}) :  playerSetup({playerName, difficulty, playAgain: true});
