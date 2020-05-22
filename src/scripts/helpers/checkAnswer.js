@@ -51,7 +51,7 @@ const handleFlash = (isFlag, correctAnswer) => {
                     if (elForCorrectClass.classList.contains('selected-correct')) {
                         elForCorrectClass.classList.remove('selected-correct');
                     } else {
-                    // scroll to correct answer
+                        // scroll to correct answer
                         elForCorrectClass.scrollIntoView({ block: 'start',  behavior: 'smooth' });
                         elForCorrectClass.classList.add('selected-correct');   
                     }
